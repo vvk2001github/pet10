@@ -2,6 +2,13 @@ import { SHAPES, COLORS } from "./constants";
 
 export class Piece {
 
+    x;
+    y;
+    color;
+    shape;
+    ctx;
+    typeId;
+
     constructor(ctx) {
         this.ctx = ctx;
         this.spawn();

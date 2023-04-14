@@ -1,14 +1,6 @@
-export const COLS = 10;
-export const ROWS = 20;
 export const BLOCK_SIZE = 30;
-export const KEY = {
-    LEFT: 37,
-    RIGHT: 39,
-    DOWN: 40,
-    SPACE: 32,
-    UP: 38,
-}
-Object.freeze(KEY);
+
+export const COLS = 10;
 
 export const COLORS = [
     'cyan',
@@ -20,6 +12,57 @@ export const COLORS = [
     'red'
 ];
 Object.freeze(COLORS);
+
+export const KEY = {
+    ESC: 27,
+    LEFT: 37,
+    RIGHT: 39,
+    DOWN: 40,
+    SPACE: 32,
+    UP: 38,
+    P: 80
+}
+Object.freeze(KEY);
+
+export const LEVEL = {
+    0: 800,
+  1: 720,
+  2: 630,
+  3: 550,
+  4: 470,
+  5: 380,
+  6: 300,
+  7: 220,
+  8: 130,
+  9: 100,
+  10: 80,
+  11: 80,
+  12: 80,
+  13: 70,
+  14: 70,
+  15: 70,
+  16: 50,
+  17: 50,
+  18: 50,
+  19: 30,
+  20: 30,
+}
+
+Object.freeze(LEVEL);
+
+export const LINES_PER_LEVEL = 10;
+
+export const POINTS = {
+    SINGLE: 100,
+    DOUBLE: 300,
+    TRIPLE: 500,
+    TETRIS: 800,
+    SOFT_DROP: 1,
+    HARD_DROP: 2
+}
+Object.freeze(POINTS);
+
+export const ROWS = 20;
 
 export const SHAPES = [
     [[0, 0, 0, 0],
