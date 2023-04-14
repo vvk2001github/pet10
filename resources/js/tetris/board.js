@@ -1,14 +1,16 @@
-import { COLS, BLOCK_SIZE, ROWS } from "./constants";
+import { COLS, ROWS } from "./constants";
+import { Piece } from "./piece";
 
 export class Board {
-    constructor() {
+    ctx;
+    piece;
+
+    constructor(ctx) {
       this.piece = null;
+      this.ctx = ctx;
     }
 
-    // Сбрасывает игровое поле перед началом новой игры
-    reset() {
-      this.grid = this.getEmptyBoard();
-    }
+
 
     // Создает матрицу нужного размера, заполненную нулями
     getEmptyBoard() {
@@ -39,6 +41,13 @@ export class Board {
       // не занята ли клетка поля другими фигурками
     notOccupied(x, y) {
         return this.grid[y] && this.grid[y][x] === 0;
+    }
+
+    // Сбрасывает игровое поле перед началом новой игры
+    reset() {
+        this.grid = this.getEmptyBoard();
+        this.piece = new Piece(this.ctx);
+        this.piece.setStartingPosition();
     }
 
     rotate(piece) {

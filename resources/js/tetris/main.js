@@ -19,14 +19,15 @@ ctx.canvas.height = ROWS * BLOCK_SIZE;
 // Устанавливаем масштаб
 ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
 
-let board = new Board();
+let board = new Board(ctx);
 
 export function play() {
     board.reset();
-    let piece = new Piece(ctx)
-    piece.draw();
+    // let piece = new Piece(ctx)
+    // piece.draw();
 
-    board.piece = piece;
+    // board.piece = piece;
+    board.piece.draw();
 }
 
 document.addEventListener('keydown', event => {
