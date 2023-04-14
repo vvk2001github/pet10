@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TetrisController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,4 +30,6 @@ Route::middleware([
     Route::get('/test', function() {
         return view('test');
     })->name('test');
+
+    Route::get('/tetris', [TetrisController::class, 'index'])->name('tetris.index');
 });
