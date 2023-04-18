@@ -6,8 +6,9 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
-		'resources/css/tetris-styles.css',
+		        'resources/css/tetris-styles.css',
                 'resources/js/app.js',
+                'resources/js/tetris/app.js',
             ],
             refresh: [
                 ...refreshPaths,

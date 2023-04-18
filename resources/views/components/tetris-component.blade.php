@@ -13,7 +13,7 @@
         <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/tetris-styles.css', 'resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/tetris-styles.css', 'resources/css/app.css', 'resources/js/tetris/app.js'])
 
         <!-- Styles -->
         @livewireStyles
