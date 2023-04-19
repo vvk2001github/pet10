@@ -29,4 +29,9 @@ class ChatList extends Component
     {
         return view('livewire.chat.chat-list');
     }
+
+    public function resetComponent()
+    {
+        $this->selected_conversation = null;
+    }
 }

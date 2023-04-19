@@ -15,9 +15,10 @@ class Chatbox extends Component
     public $paginateVar = 10;
 
     protected $listeners = [
-        'loadConversation' => 'loadConversation',
-        'loadmore' => 'loadmore',
-        'updateHeight' => 'updateHeight',
+        'loadConversation',
+        'loadmore',
+        'updateHeight',
+        'resetComponent',
     ];
 
     public function loadConversation(Conversation $conversation)
@@ -44,17 +45,21 @@ class Chatbox extends Component
 
         $height = $this->height;
         $this->dispatchBrowserEvent('updatedHeight', ($height));
-        # code...
     }
 
     public function mount()
     {
-        $this->loadConversation(Conversation::find(1));
+        // $this->loadConversation(Conversation::find(1));
     }
 
     public function render()
     {
         return view('livewire.chat.chatbox');
+    }
+
+    public function resetComponent()
+    {
+        $this->selected_conversation= null;
     }
 
     function updateHeight($height)

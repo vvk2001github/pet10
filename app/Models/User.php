@@ -58,4 +58,11 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function last_readed_messages()
+    {
+        return $this->belongsToMany(Conversation::class)
+            ->withPivot('last_readed_message')
+            ->withTimestamps();
+    }
 }
