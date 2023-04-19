@@ -28,6 +28,7 @@ class Chatbox extends Component
             ->skip($messages_count -  $this->paginateVar)
             ->take($this->paginateVar)->get();
 
+        $this->dispatchBrowserEvent('rowChatToBottom');
     }
 
     function loadmore()

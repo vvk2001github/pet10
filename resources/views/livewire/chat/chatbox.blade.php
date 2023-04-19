@@ -59,4 +59,10 @@
     });
 </script>
 
+<script>
+    window.addEventListener('rowChatToBottom', event => {
+        $('.chatbox_body').scrollTop($('.chatbox_body')[0].scrollHeight);
+    });
+</script>
+
 </div>
