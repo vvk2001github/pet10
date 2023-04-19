@@ -21,8 +21,8 @@ class MessageFactory extends Factory
     {
         return [
             'sender_id' => $this->faker->numberBetween(1, 2),
-            'conversation_id' => $this->faker->randomElement([1, 3]),
-            'body' => $this->faker->text(1000),
+            'conversation_id' => $this->faker->randomElement([1, 2]),
+            'body' => $this->faker->text(100),
         ];
     }
 }
