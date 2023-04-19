@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\TetrisController;
+use App\Http\Livewire\Chat\CreateChat;
+use App\Http\Livewire\Chat\Main;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,4 +34,8 @@ Route::middleware([
     })->name('test');
 
     Route::get('/tetris', [TetrisController::class, 'index'])->name('tetris.index');
+
+    // Chat
+    Route::get('/chatusers', CreateChat::class)->name('chat.users');
+    Route::get('/chat{key?}', Main::class)->name('chat.chat');
 });
