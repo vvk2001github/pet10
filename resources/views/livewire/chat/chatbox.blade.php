@@ -31,12 +31,16 @@
 
     <div class="chatbox_body">
 
-            <div class="msg_body msg_body_receiver" style="width:80%;max-width:80%;max-width:max-content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque cum omnis ut, modi dolorem, aliquid beatae praesentium quis natus voluptatem, officiis sed distinctio libero unde hic veniam? Temporibus, iusto maiores.
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati voluptates vitae aperiam! Dolorum ipsam aperiam excepturi laboriosam. Quisquam deleniti veritatis explicabo. Labore consequatur quod hic debitis laudantium qui, quo sequi.
+            @foreach ($messages as $message)
+
+            <div class="msg_body {{ auth()->id() == $message->sender->id ? 'msg_body_me' : 'msg_body_receiver' }}" style="width:80%;max-width:80%;max-width:max-content">
+                <div class="name text-black">
+                    {{ $message->sender->name }}
+                </div>
+                {{ $message->body }}
                 <div class="msg_body_footer">
                     <div class="date">
-                        5 hours ago
+                        {{ $message->created_at->format('Y-m-d H:i') }}
                     </div>
 
                     <div class="read">
@@ -46,21 +50,7 @@
                     </div>
                 </div>
             </div>
-
-            <div class="msg_body msg_body_me" style="width:80%;max-width:80%;max-width:max-content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque cum omnis ut, modi dolorem, aliquid beatae praesentium quis natus voluptatem, officiis sed distinctio libero unde hic veniam? Temporibus, iusto maiores.
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati voluptates vitae aperiam! Dolorum ipsam aperiam excepturi laboriosam. Quisquam deleniti veritatis explicabo. Labore consequatur quod hic debitis laudantium qui, quo sequi.
-                <div class="msg_body_footer">
-                    <div class="date">
-                        5 hours ago
-                    </div>
-
-                    <div class="read">
-                        <i class="bi bi-check"></i>
-                    </div>
-                </div>
-            </div>
-
+            @endforeach
 
     </div>
 

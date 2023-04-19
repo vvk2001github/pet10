@@ -15,14 +15,14 @@
     <div class="chatlist_body">
 
         @foreach ($conversations as $conversation)
-        <div class="chatlist_item" wire:key='{{$conversation->id}}'>
+        <div class="chatlist_item" wire:key='{{$conversation->id}}' wire:click="chatSelected({{$conversation->id}})">
 
 
             <div class="chatlist_info">
                 <div class="top_row">
                     <div class="list_chatname">{{ $conversation->name }}
                     </div>
-                    <span class="date">2d</span>
+                    <span class="date">{{ $conversation->messages->last()?->created_at->shortAbsoluteDiffForHumans() }}</span>
                 </div>
 
                 <div class="bottom_row">

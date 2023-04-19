@@ -9,6 +9,13 @@ class ChatList extends Component
 {
     public $auth_id;
     public $conversations;
+    public $selected_conversation = null;
+
+    public function chatSelected(Conversation $conversation)
+    {
+        $this->selected_conversation = $conversation;
+        $this->emitTo('chat.chatbox', 'loadConversation', $this->selected_conversation);
+    }
 
     public function mount()
     {
