@@ -28,7 +28,7 @@
                 <div class="bottom_row">
 
                     <div class="message_body truncate">
-                        {{ $conversation->descr }}
+                        {{ $conversation->messages->last()?->body }}
                     </div>
 
                     <div class="unread_count badge rounded-pill text-light bg-danger">56</div>

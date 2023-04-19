@@ -2,31 +2,10 @@
     {{-- The best athlete wants his opponent at his best. --}}
     <div class="chatbox_header">
 
-        <div class="return">
-            <i class="bi bi-arrow-left"></i>
-        </div>
-
-        <div class="img_container">
-            <img src="https://ui-avatars.com/api/?name=name" alt="">
-        </div>
-
         <div class="name">
-            John
+            {{ $selected_conversation->descr }}
         </div>
 
-        <div class="info">
-            <div class="info_item">
-                <i class="bi bi-telephone-fill"></i>
-            </div>
-
-            <div class="info_item">
-                <i class="bi bi-image"></i>
-            </div>
-
-            <div class="info_item">
-                <i class="bi bi-info-circle-fill"></i>
-            </div>
-        </div>
     </div>
 
     <div class="chatbox_body">
@@ -57,4 +36,27 @@
     <div class="chatbox_footer">
         footer
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script>
+        $(".chatbox_body").on('scroll', function() {
+            // alert('aahsd');
+            var top = $('.chatbox_body').scrollTop();
+            //   alert('aasd');
+            if (top == 0) {
+                window.livewire.emit('loadmore');
+            }
+        });
+    </script>
+
+<script>
+    window.addEventListener('updatedHeight', event => {
+        let old = event.detail.height;
+        let newHeight = $('.chatbox_body')[0].scrollHeight;
+        let height = $('.chatbox_body').scrollTop(newHeight - old);
+        window.livewire.emit('updateHeight', {
+            height: height,
+        });
+    });
+</script>
+
 </div>
