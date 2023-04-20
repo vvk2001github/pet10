@@ -19,7 +19,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('chat', function (User $user) {
+Broadcast::channel('pet10.chat.MessageSent', function (User $user) {
     // return (int) $user->id === (int) $id;
     // error_log('id-'.$id);
     return true;

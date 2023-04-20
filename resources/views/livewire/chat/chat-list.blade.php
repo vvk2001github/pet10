@@ -22,13 +22,13 @@
                 <div class="top_row">
                     <div class="list_chatname">{{ $conversation->name }}
                     </div>
-                    <span class="date">{{ $conversation->messages->last()?->created_at->shortAbsoluteDiffForHumans() }}</span>
+                    <span class="date">{{ $conversation->messages->sortBy('created_at')->last()?->created_at->shortAbsoluteDiffForHumans() }}</span>
                 </div>
 
                 <div class="bottom_row">
 
                     <div class="truncate message_body">
-                        {{ $conversation->messages->last()?->body }}
+                        {{ $conversation->messages->sortBy('created_at')->last()?->body }}
                     </div>
 
                     @php

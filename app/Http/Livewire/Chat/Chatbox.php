@@ -25,16 +25,19 @@ class Chatbox extends Component
 
     public function broadcastedMessageReceived($event)
     {
-        dd($event);
-        error_log($event);
+        $broadcastedMessage = Message::find($event['message']);
+        // error_log($broadcastedMessage);
+        if($broadcastedMessage->sender_id != auth()->user()->id || $broadcastedMessage->conversation_id != $this->selected_conversation?->id) {
+            $this->emitTo('chat.chat-list','refresh');
+        } else {
+            //
+        }
     }
 
     public function getListeners(): array
     {
-        $selected_conversation = $this->selected_conversation->id ?? 0;
-        error_log('getListeners '.$selected_conversation);
         return [
-            "echo-private:chat,MessageSent" => 'broadcastedMessageReceived',
+            "echo-private:pet10.chat.MessageSent,MessageSent" => 'broadcastedMessageReceived',
             // "echo-private:chat.{$selected_conversation},MessageRead" => 'broadcastedMessageRead',
             'loadConversation',
             'loadmore',
@@ -51,6 +54,7 @@ class Chatbox extends Component
         // error_log('Message count:'.$messages_count);
         // error_log('selected_conversation:'.$this->selected_conversation->id);
         $this->messages = Message::where('conversation_id',  $this->selected_conversation->id)
+            ->orderBy('created_at', 'ASC')
             ->skip($messages_count -  $this->paginateVar)
             ->take($this->paginateVar)->get();
 
@@ -68,6 +72,7 @@ class Chatbox extends Component
         $messages_count = Message::where('conversation_id', $this->selected_conversation->id)->count();
 
         $this->messages = Message::where('conversation_id',  $this->selected_conversation->id)
+            ->orderBy('created_at', 'ASC')
             ->skip($messages_count -  $this->paginateVar)
             ->take($this->paginateVar)->get();
 
