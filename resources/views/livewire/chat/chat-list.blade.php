@@ -37,7 +37,9 @@
                         $count_unread_messages = count($conversation->messages->where('id', '>', $last_readed_message_id));
                         // dd($count_unread_messages);
                         //$count_unread_messages =
-                        echo '<div class="unread_count badge rounded-pill text-light bg-danger">'.$count_unread_messages.'</div>';
+                        if ($count_unread_messages > 0) {
+                            echo '<div class="unread_count badge rounded-pill text-light bg-danger">'.$count_unread_messages.'</div>';
+                        }
                     @endphp
 
                 </div>
