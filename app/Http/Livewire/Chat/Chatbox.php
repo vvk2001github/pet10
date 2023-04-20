@@ -31,6 +31,7 @@ class Chatbox extends Component
             ->take($this->paginateVar)->get();
 
         $this->dispatchBrowserEvent('rowChatToBottom');
+        $this->dispatchBrowserEvent('chatSelected');
     }
 
     function loadmore()

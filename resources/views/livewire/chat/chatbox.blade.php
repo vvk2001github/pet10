@@ -4,6 +4,10 @@
 
     <div class="chatbox_header">
 
+        <div class="return">
+            <i class="bi bi-arrow-left"></i>
+        </div>
+
         <div class="name">
             {{ $selected_conversation->descr }}
         </div>
@@ -73,6 +77,12 @@
     <script>
         window.addEventListener('rowChatToBottom', event => {
             $('.chatbox_body').scrollTop($('.chatbox_body')[0].scrollHeight);
+        });
+    </script>
+
+    <script>
+        $(document).on('click','.return',function(){
+            window.livewire.emit('resetComponent');
         });
     </script>
 
