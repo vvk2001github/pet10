@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Chat;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Events\MessageSent;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Chatbox extends Component
@@ -27,7 +28,7 @@ class Chatbox extends Component
     {
         $broadcastedMessage = Message::find($event['message']);
 
-        if($broadcastedMessage->sender_id != auth()->user()->id) {
+        if($broadcastedMessage->sender_id != auth()->user()->id && $broadcastedMessage->conversation_id == $this->selected_conversation->id) {
             $this->pushMessage($broadcastedMessage);
         }
         $this->emitTo('chat.chat-list','refresh');
@@ -42,7 +43,8 @@ class Chatbox extends Component
             'loadmore',
             'updateHeight',
             'resetComponent',
-            'pushMessage'
+            'pushMessage',
+            'makeConversationAsRead',
         ];
     }
 
@@ -59,6 +61,7 @@ class Chatbox extends Component
 
         // error_log($this->messages);
 
+        $this->emitSelf('makeConversationAsRead');
         $this->dispatchBrowserEvent('rowChatToBottom');
         $this->dispatchBrowserEvent('chatSelected');
     }
@@ -77,6 +80,21 @@ class Chatbox extends Component
 
         $height = $this->height;
         $this->dispatchBrowserEvent('updatedHeight', ($height));
+    }
+
+    public function makeConversationAsRead()
+    {
+        $oldest_message = $this->selected_conversation->messages->sortBy('created_at')->last() ?? null;
+        $user_id = auth()->user()->id;
+        if($oldest_message) {
+            $id_oldest_message = $oldest_message->id;
+            $last_readed_message = $this->selected_conversation->last_readed_messages()->where('user_id', Auth::user()->id)->first()?->pivot->last_readed_message ?? 0;
+            if($last_readed_message == 0) {
+                $this->selected_conversation->last_readed_messages()->attach($user_id, ['last_readed_message' => $id_oldest_message]);
+            } else {
+                $this->selected_conversation->last_readed_messages()->updateExistingPivot($user_id, ['last_readed_message' => $id_oldest_message]);
+            }
+        }
     }
 
     public function mount()
