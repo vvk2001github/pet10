@@ -26,12 +26,11 @@ class Chatbox extends Component
     public function broadcastedMessageReceived($event)
     {
         $broadcastedMessage = Message::find($event['message']);
-        // error_log($broadcastedMessage);
-        if($broadcastedMessage->sender_id != auth()->user()->id || $broadcastedMessage->conversation_id != $this->selected_conversation?->id) {
-            $this->emitTo('chat.chat-list','refresh');
-        } else {
-            //
+
+        if($broadcastedMessage->sender_id != auth()->user()->id) {
+            $this->pushMessage($broadcastedMessage);
         }
+        $this->emitTo('chat.chat-list','refresh');
     }
 
     public function getListeners(): array
