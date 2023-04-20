@@ -1,5 +1,6 @@
 <div>
     {{-- The whole world belongs to you. --}}
+    @if($selected_conversation)
     <form wire:submit.prevent='sendMessage' action="">
         <div class="chatbox_footer">
             <div class="custom_form_group">
@@ -8,4 +9,5 @@
             </div>
         </div>
     </form>
+    @endif
 </div>

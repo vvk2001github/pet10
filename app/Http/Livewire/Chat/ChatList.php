@@ -7,25 +7,26 @@ use Livewire\Component;
 
 class ChatList extends Component
 {
-    public $auth_id;
-    public $conversations;
-    public $selected_conversation = null;
+    public \Illuminate\Support\Collection $conversations;
+    public ?Conversation $selected_conversation = null;
+
+    protected $listeners= ['chatSelected','refresh'=>'$refresh','resetComponent'];
 
     public function chatSelected(Conversation $conversation)
     {
         $this->selected_conversation = $conversation;
         $this->emitTo('chat.chatbox', 'loadConversation', $this->selected_conversation);
+        $this->emitTo('chat.send-message', 'updateSendMessage', $this->selected_conversation);
     }
 
     public function mount()
     {
 
-        $this->auth_id = auth()->id();
         $this->conversations = Conversation::orderBy('name', 'ASC')->get();
 
     }
 
-    public function render()
+    public function render():\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.chat.chat-list');
     }

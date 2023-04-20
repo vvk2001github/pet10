@@ -19,6 +19,7 @@ class Chatbox extends Component
         'loadmore',
         'updateHeight',
         'resetComponent',
+        'pushMessage'
     ];
 
     public function loadConversation(Conversation $conversation)
@@ -50,6 +51,14 @@ class Chatbox extends Component
     public function mount()
     {
         // $this->loadConversation(Conversation::find(1));
+    }
+
+    // Добавляем собственное сообщение вниз списка сообщений
+    public function pushMessage(Message $message)
+    {
+        //$newMessage = Message::find($message)
+        $this->messages->push($message);
+        $this->dispatchBrowserEvent('rowChatToBottom');
     }
 
     public function render()
