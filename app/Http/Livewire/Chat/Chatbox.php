@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Chat;
 
 use App\Models\Conversation;
 use App\Models\Message;
+use App\Events\MessageSent;
 use Livewire\Component;
 
 class Chatbox extends Component
@@ -14,21 +15,46 @@ class Chatbox extends Component
     public $messages;
     public $paginateVar = 10;
 
-    protected $listeners = [
-        'loadConversation',
-        'loadmore',
-        'updateHeight',
-        'resetComponent',
-        'pushMessage'
-    ];
+    // protected $listeners = [
+    //     'loadConversation',
+    //     'loadmore',
+    //     'updateHeight',
+    //     'resetComponent',
+    //     'pushMessage'
+    // ];
+
+    public function broadcastedMessageReceived($event)
+    {
+        dd($event);
+        error_log($event);
+    }
+
+    public function getListeners(): array
+    {
+        $selected_conversation = $this->selected_conversation->id ?? 0;
+        error_log('getListeners '.$selected_conversation);
+        return [
+            "echo-private:chat,MessageSent" => 'broadcastedMessageReceived',
+            // "echo-private:chat.{$selected_conversation},MessageRead" => 'broadcastedMessageRead',
+            'loadConversation',
+            'loadmore',
+            'updateHeight',
+            'resetComponent',
+            'pushMessage'
+        ];
+    }
 
     public function loadConversation(Conversation $conversation)
     {
         $this->selected_conversation = $conversation;
         $messages_count = Message::where('conversation_id', $this->selected_conversation->id)->count();
+        // error_log('Message count:'.$messages_count);
+        // error_log('selected_conversation:'.$this->selected_conversation->id);
         $this->messages = Message::where('conversation_id',  $this->selected_conversation->id)
             ->skip($messages_count -  $this->paginateVar)
             ->take($this->paginateVar)->get();
+
+        // error_log($this->messages);
 
         $this->dispatchBrowserEvent('rowChatToBottom');
         $this->dispatchBrowserEvent('chatSelected');
@@ -57,7 +83,6 @@ class Chatbox extends Component
     // Добавляем собственное сообщение вниз списка сообщений
     public function pushMessage(Message $message)
     {
-        //$newMessage = Message::find($message)
         $this->messages->push($message);
         $this->dispatchBrowserEvent('rowChatToBottom');
     }
