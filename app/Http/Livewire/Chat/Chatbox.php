@@ -28,7 +28,7 @@ class Chatbox extends Component
     {
         $broadcastedMessage = Message::find($event['message']);
 
-        if($broadcastedMessage->sender_id != auth()->user()->id && $broadcastedMessage->conversation_id == $this->selected_conversation->id) {
+        if($this->selected_conversation && $broadcastedMessage->sender_id != auth()->user()->id && $broadcastedMessage->conversation_id == $this->selected_conversation->id) {
             $this->pushMessage($broadcastedMessage);
         }
         $this->emitTo('chat.chat-list','refresh');
@@ -95,6 +95,7 @@ class Chatbox extends Component
                 $this->selected_conversation->last_readed_messages()->updateExistingPivot($user_id, ['last_readed_message' => $id_oldest_message]);
             }
         }
+        $this->emitTo('chat.chat-list','refresh');
     }
 
     public function mount()
@@ -107,6 +108,7 @@ class Chatbox extends Component
     {
         $this->messages->push($message);
         $this->dispatchBrowserEvent('rowChatToBottom');
+        $this->makeConversationAsRead();
     }
 
     public function render()
