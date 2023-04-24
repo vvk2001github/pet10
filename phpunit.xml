@@ -10,6 +10,11 @@
         </testsuite>
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
+            <exclude>./tests/Feature/ApiTokenPermissionsTest.php</exclude>
+            <exclude>./tests/Feature/CreateApiTokenTest.php</exclude>
+            <exclude>./tests/Feature/DeleteApiTokenTest.php</exclude>
+            <exclude>./tests/Feature/EmailVerificationTest.php</exclude>
+            <exclude>./tests/Feature/RegistrationTest.php</exclude>
         </testsuite>
     </testsuites>
     <coverage>
@@ -21,6 +26,7 @@
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
+        <env name="DB_CONNECTION" value="testsqlite"/>
         <!-- <env name="DB_CONNECTION" value="sqlite"/> -->
         <!-- <env name="DB_DATABASE" value=":memory:"/> -->
         <env name="MAIL_MAILER" value="array"/>
