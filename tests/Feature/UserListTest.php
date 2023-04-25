@@ -2,19 +2,18 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\User\UserAdd;
-use App\Http\Livewire\User\UserList;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class UserMainUserTest extends TestCase
+class UserListTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_dashboar_permissions(): void
+    public function test_userlist_display_roles(): void
     {
         $user = User::factory()->create();
 
@@ -25,25 +24,6 @@ class UserMainUserTest extends TestCase
         $permissionConfigChat = Permission::create(['name' => 'configure.chat']);
         $permissionConfigChat->assignRole($roleConfigChat);
         $user->assignRole('Chat Config');
-
-        $this->actingAs($user);
-
-        $this->get('/dashboard')
-            ->assertSeeText('Configure Chat')
-            ->assertDontSeeText('Configure User');
-    }
-
-    public function test_main_user_component_unauthorized(): void
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $this->get('/confuser')
-            ->assertForbidden();
-    }
-
-    public function test_main_user_component_authorized(): void
-    {
-        $user = User::factory()->create();
 
         $roleConfigUsers = Role::create([
             'name' => 'User Config',
@@ -57,7 +37,6 @@ class UserMainUserTest extends TestCase
         $this->actingAs($user);
 
         $this->get('/confuser')
-            ->assertSeeLivewire(UserList::class)
-            ->assertSeeLivewire(UserAdd::class);
+            ->assertSeeText('Chat Config, User Config');
     }
 }
