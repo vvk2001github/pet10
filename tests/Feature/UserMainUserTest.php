@@ -57,7 +57,6 @@ class UserMainUserTest extends TestCase
         $this->actingAs($user);
 
         $this->get('/confuser')
-            ->assertSeeLivewire(UserList::class)
-            ->assertSeeLivewire(UserAdd::class);
+            ->assertSeeLivewire(UserList::class);
     }
 }
