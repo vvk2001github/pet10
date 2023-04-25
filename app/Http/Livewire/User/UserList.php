@@ -16,15 +16,17 @@ class UserList extends Component
     public bool $showDeleteConfirmation = false;
     public bool $showEdit = false;
 
-    protected $listeners = ['refreshUsers'];
+    protected $listeners = ['refreshUsers', 'showList'];
 
     public function deleteUser():void
     {
         if(is_null($this->selectedUser)) return;
         if($this->selectedUser->id == 1) return;
         $this->selectedUser->delete();
-        $this->selectedUser = null;
+
+        $this->emitSelf('showList');
         $this->emitSelf('refreshUsers');
+
     }
 
     public function mount(): void
@@ -43,6 +45,14 @@ class UserList extends Component
         $this->showList = false;
         $this->showDeleteConfirmation = true;
         $this->showEdit = false;
+    }
+
+    public function selectEditUser(User $user):void
+    {
+        $this->selectedUser = $user;
+        $this->showList = false;
+        $this->showDeleteConfirmation = false;
+        $this->showEdit = true;
     }
 
     public function showList():void
