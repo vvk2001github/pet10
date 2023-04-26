@@ -11,6 +11,8 @@ class UserList extends Component
 {
 
     public $username;
+    public $editemail;
+    public $editusername;
     public $email;
     public $roles;
     public $users;
@@ -21,6 +23,12 @@ class UserList extends Component
     public bool $showEdit = false;
 
     protected $listeners = ['refreshUsers', 'showUserList'];
+    protected $messages = [
+        'editemail.required' => 'The Email Address cannot be empty.',
+        'editemail.email' => 'The Email Address format is not valid.',
+        'editusername.required' => 'The Name cannot be empty.',
+        'editusername.min' => 'The Name must be at least 4 characters.',
+    ];
 
     public function deleteUser():void
     {
@@ -61,6 +69,12 @@ class UserList extends Component
                 'username' => 'required|min:4',
                 'email' => 'required|email',
             ];
+
+        if($this->showEdit)
+            return [
+                'editusername' => 'required|min:4',
+                'editemail' => 'required|email',
+            ];
     }
 
     public function selectDeleteUser(User $user):void
@@ -84,7 +98,8 @@ class UserList extends Component
 
         $this->selectedUser = $user;
         $this->selectedRoles = $this->selectedUser->getRoleNames();
-        error_log($this->selectedRoles);
+        $this->editusername = $this->selectedUser->name;
+        $this->editemail = $this->selectedUser->email;
         $this->showList = false;
         $this->showDeleteConfirmation = false;
         $this->showEdit = true;

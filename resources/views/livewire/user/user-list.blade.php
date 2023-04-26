@@ -69,7 +69,7 @@
     @endif
     @if ($showEdit)
         <i class="bi bi-arrow-left-circle-fill hover:text-red-900" wire:click="showUserList()"></i>
-        <div class="px-4 py-3 text-blue-900 bg-blue-100 border-t-4 border-blue-500 rounded-b shadow-md" role="alert">
+        <div class="px-4 py-3 text-indigo-700 bg-blue-100 border-t-4 border-indigo-700 rounded-b shadow-md" role="alert">
             <div class="flex">
                 <div class="py-1"><svg class="w-6 h-6 mr-4 text-blue-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
                 <div>
@@ -80,22 +80,51 @@
         </div>
 
         <br />
-        <div class="mb-6">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-            <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required>
+
+
+
+        <!----->
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full md:w-5/12 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="editusername">
+                    Name
+                </label>
+                <input wire:model='editusername' type="text" id="editusername" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" placeholder="User name">
+                @error('editusername') <p class="text-red-500 text-xs italic">{{$message}}</p> @enderror
+            </div>
+            <div class="w-full md:w-5/12 px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="editemail">
+                    Email
+                </label>
+                <input wire:model='editemail' type="text" id="editemail" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="User email">
+                @error('editemail') <p class="text-red-500 text-xs italic">{{$message}}</p> @enderror
+            </div>
         </div>
-        <div class="mb-6">
-            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-            <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+        <!--Passwords-->
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full px-3">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="editpassword">
+                Password
+              </label>
+              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="editpassword" type="password" placeholder="******************">
+              <p class="text-gray-600 text-xs italic">Enter password</p>
+            </div>
         </div>
-        <div class="mb-6">
-            <label for="confpassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-            <input type="password" id="confpassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full px-3">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="editconfirmpassword">
+                Confirm password
+              </label>
+              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="editconfirmpassword" type="password" placeholder="******************">
+              <p class="text-gray-600 text-xs italic">Confirm password</p>
+            </div>
         </div>
+        <!--Passwords-->
+        <!----->
 
         <div class="mb-6">
-            <label for="allroles" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Roles</label>
-                <select wire:model="selectedRoles" id="allroles" class="form-multiselect block w-full mt-1" multiple>
+            <label for="allroles" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Roles</label>
+                <select wire:model="selectedRoles" id="allroles" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3" multiple>
                     @foreach ($roles as $role)
                         <option value="{{ $role->name }}">{{$role->name}}</option>
                     @endforeach
@@ -106,10 +135,10 @@
 
         <div class="grid grid-cols-2 gap-4 mx-auto">
             <div class="text-center">
-                <button class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700" wire:click="saveUser()">{{ __('Save') }}</button>
+                <button class="px-4 py-2 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700" wire:click="saveUser()">{{ __('Save') }}</button>
             </div>
             <div class="text-center">
-                <button class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700" wire:click="showUserList()">{{ __('Cancel') }}</button>
+                <button class="px-4 py-2 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700" wire:click="showUserList()">{{ __('Cancel') }}</button>
             </div>
         </div>
 
