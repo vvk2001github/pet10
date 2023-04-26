@@ -69,15 +69,12 @@
     @endif
     @if ($showEdit)
         <i class="bi bi-arrow-left-circle-fill hover:text-red-900" wire:click="showUserList()"></i>
-        <div class="px-4 py-3 text-indigo-700 bg-blue-100 border-t-4 border-indigo-700 rounded-b shadow-md" role="alert">
-            <div class="flex">
-                <div class="py-1"><svg class="w-6 h-6 mr-4 text-blue-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
-                <div>
-                    <p class="font-bold">{{ $selectedUser?->name }}</p>
-                    <p class="text-sm">You are editing user {{ $selectedUser?->name }}.</p>
-                </div>
-            </div>
-        </div>
+        @error('bigwarning')
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">{{__('Warning')}}!</strong>
+            <span class="block sm:inline">{{$message}}</span>
+          </div>
+        @enderror
 
         <br />
 
@@ -132,7 +129,10 @@
                 </select>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 mx-auto">
+        <div class="grid grid-cols-3 gap-4 mx-auto">
+            <div class="text-center">
+                <button class="px-4 py-2 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700" wire:click="removeAllRoles()">{{ __('Remove All Roles') }}</button>
+            </div>
             <div class="text-center">
                 <button class="px-4 py-2 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700" wire:click="userSave()">{{ __('Save') }}</button>
             </div>

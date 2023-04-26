@@ -60,6 +60,11 @@ class UserList extends Component
         $this->roles = Role::all();
     }
 
+    public function removeAllRoles()
+    {
+        $this->selectedRoles = [];
+    }
+
     public function render()
     {
         return view('livewire.user.user-list');
@@ -77,8 +82,8 @@ class UserList extends Component
             return [
                 'editusername' => 'required|min:4',
                 'editemail' => 'required|email',
-                'editpassword'=> 'min:4|confirmed',
-                'editpassword_confirmation'=> 'min:4',
+                'editpassword'=> 'confirmed',
+                'editpassword_confirmation'=> '',
             ];
     }
 
@@ -87,7 +92,15 @@ class UserList extends Component
         /** @var App\User $currentUser */
         $currentUser = auth()->user();
         if(!$currentUser->can('configure.chat')) return;
+
         $this->selectedUser = $user;
+
+        // Нельзя удалить такого пользователя
+        if($this->selectedUser->id == 1) {
+            // $this->addError('bigwarning', 'You cannot delete this user!');
+            return;
+        }
+
         $this->showList = false;
         $this->showDeleteConfirmation = true;
         $this->showEdit = false;
@@ -150,13 +163,33 @@ class UserList extends Component
 
         $this->validate();
 
+        // Только СуперАдмин может установить роль Super User
+        if(!$currentUser->hasRole('Super User')) {
+            foreach($this->selectedRoles as $role) {
+                error_log($role);
+                if($role == 'Super User') {
+                    $this->addError('bigwarning', 'Only Super User can add role Super User!');
+                    return;
+                }
+            }
+        }
+
         $this->selectedUser->name = $this->editusername;
         $this->selectedUser->email = $this->editemail;
-        $this->selectedUser->password = Hash::make($this->editpassword);
+        if($this->editpassword && mb_strlen($this->editpassword) > 0 && $this->editpassword_confirmation == $this->editpassword) {
+            $this->selectedUser->password = Hash::make($this->editpassword);
+        }
         $this->selectedUser->save();
+        $this->selectedUser->syncRoles([]);
+        foreach($this->selectedRoles as $role) {
+            $this->selectedUser->assignRole($role);
+        };
+        if($this->selectedUser->id == 1) $this->selectedUser->assignRole('Super User');
 
         $this->reset('username');
         $this->reset('email');
+        $this->reset('editpassword');
+        $this->reset('editpassword_confirmation');
         $this->emitSelf('refreshUsers');
         $this->emitSelf('showUserList');
     }
