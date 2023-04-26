@@ -4,6 +4,7 @@ namespace App\Http\Livewire\User;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 
@@ -13,6 +14,8 @@ class UserList extends Component
     public $username;
     public $editemail;
     public $editusername;
+    public $editpassword;
+    public $editpassword_confirmation;
     public $email;
     public $roles;
     public $users;
@@ -74,6 +77,8 @@ class UserList extends Component
             return [
                 'editusername' => 'required|min:4',
                 'editemail' => 'required|email',
+                'editpassword'=> 'min:4|confirmed',
+                'editpassword_confirmation'=> 'min:4',
             ];
     }
 
@@ -135,5 +140,24 @@ class UserList extends Component
         $this->reset('username');
         $this->reset('email');
         $this->emitSelf('refreshUsers');
+    }
+
+    public function userSave(): void
+    {
+        /** @var App\User $currentUser */
+        $currentUser = auth()->user();
+        if(!$currentUser->can('configure.chat')) return;
+
+        $this->validate();
+
+        $this->selectedUser->name = $this->editusername;
+        $this->selectedUser->email = $this->editemail;
+        $this->selectedUser->password = Hash::make($this->editpassword);
+        $this->selectedUser->save();
+
+        $this->reset('username');
+        $this->reset('email');
+        $this->emitSelf('refreshUsers');
+        $this->emitSelf('showUserList');
     }
 }

@@ -106,17 +106,16 @@
               <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="editpassword">
                 Password
               </label>
-              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="editpassword" type="password" placeholder="******************">
-              <p class="text-gray-600 text-xs italic">Enter password</p>
+              <input wire:model="editpassword" name="editpassword" id="editpassword" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="password" placeholder="******************">
+              @error('editpassword') <p class="text-red-500 text-xs italic">{{$message}}</p> @enderror
             </div>
         </div>
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full px-3">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="editconfirmpassword">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="editpassword_confirmation">
                 Confirm password
               </label>
-              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="editconfirmpassword" type="password" placeholder="******************">
-              <p class="text-gray-600 text-xs italic">Confirm password</p>
+              <input wire:model="editpassword_confirmation" name="editpassword_confirmation" id="editpassword_confirmation" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="password" placeholder="******************">
             </div>
         </div>
         <!--Passwords-->
@@ -135,7 +134,7 @@
 
         <div class="grid grid-cols-2 gap-4 mx-auto">
             <div class="text-center">
-                <button class="px-4 py-2 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700" wire:click="saveUser()">{{ __('Save') }}</button>
+                <button class="px-4 py-2 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700" wire:click="userSave()">{{ __('Save') }}</button>
             </div>
             <div class="text-center">
                 <button class="px-4 py-2 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700" wire:click="showUserList()">{{ __('Cancel') }}</button>
