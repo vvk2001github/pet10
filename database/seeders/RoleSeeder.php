@@ -23,6 +23,10 @@ class RoleSeeder extends Seeder
             'name' => 'Chat Config',
         ]);
 
+        $roleSuperUser = Role::create([
+            'name' => 'Super User',
+        ]);
+
         $permissionConfigUsers = Permission::create(['name' => 'configure.user']);
         $permissionConfigChat = Permission::create(['name' => 'configure.chat']);
 
@@ -30,5 +34,6 @@ class RoleSeeder extends Seeder
         $permissionConfigChat->assignRole($roleConfigChat);
 
         User::where('email', 'nastya@example.com')->first()->assignRole('Chat Config');
+        User::where('id', 1)->first()->assignRole($roleSuperUser);
     }
 }

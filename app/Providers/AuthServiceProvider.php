@@ -5,6 +5,8 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 // use Illuminate\Auth\Access\Gate;
+
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -27,8 +29,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(function ($user, $ability) {
-            return $user->id == 1 ? true : null;
+        Gate::before(function (User $user, $ability) {
+            return $user->hasRole('Super User') ? true : null;
         });
     }
 }
