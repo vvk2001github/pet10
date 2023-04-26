@@ -37,7 +37,7 @@ class UserList extends Component
     {
         /** @var App\User $currentUser */
         $currentUser = auth()->user();
-        if(!$currentUser->can('configure.chat')) return;
+        if(!$currentUser->can('configure.user')) return;
 
         if(is_null($this->selectedUser)) return;
         if($this->selectedUser->id == 1) return;
@@ -91,7 +91,7 @@ class UserList extends Component
     {
         /** @var App\User $currentUser */
         $currentUser = auth()->user();
-        if(!$currentUser->can('configure.chat')) return;
+        if(!$currentUser->can('configure.user')) return;
 
         $this->selectedUser = $user;
 
@@ -110,7 +110,7 @@ class UserList extends Component
     {
         /** @var App\User $currentUser */
         $currentUser = auth()->user();
-        if(!$currentUser->can('configure.chat')) return;
+        if(!$currentUser->can('configure.user')) return;
 
 
 
@@ -141,7 +141,7 @@ class UserList extends Component
     {
         /** @var App\User $currentUser */
         $currentUser = auth()->user();
-        if(!$currentUser->can('configure.chat')) return;
+        if(!$currentUser->can('configure.user')) return;
 
         $this->validate();
 
@@ -159,7 +159,7 @@ class UserList extends Component
     {
         /** @var App\User $currentUser */
         $currentUser = auth()->user();
-        if(!$currentUser->can('configure.chat')) return;
+        if(!$currentUser->can('configure.user')) return;
 
         $this->validate();
 
