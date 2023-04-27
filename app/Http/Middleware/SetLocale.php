@@ -15,7 +15,7 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $pet10locale = $request->session()->get('pet10locale', 'en');
+        $pet10locale = $request->session()->get('pet10locale', 'ru');
         app()->setLocale($pet10locale);
         return $next($request);
     }
