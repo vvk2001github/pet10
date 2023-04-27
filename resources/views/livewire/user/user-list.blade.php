@@ -2,14 +2,14 @@
     @if ($showList)
     <table class="w-full border-b table-fixed border-x">
         <caption class="caption-top">
-            User List
+            {{__('User List')}}
         </caption>
         <thead>
             <tr>
-            <th class="p-2 font-bold text-left text-white bg-indigo-700 border-b border-l border-indigo-700">Name</th>
-            <th class="p-2 font-bold text-left text-white bg-indigo-700 border-b border-l border-indigo-700">Email</th>
-            <th class="p-2 font-bold text-left text-white bg-indigo-700 border-b border-l border-indigo-700">Roles</th>
-            <th class="w-1/12 p-2 font-bold text-left text-white bg-indigo-700 border-b border-l border-indigo-700">Actions</th>
+            <th class="p-2 font-bold text-left text-white bg-indigo-700 border-b border-l border-indigo-700">{{__('Name')}}</th>
+            <th class="p-2 font-bold text-left text-white bg-indigo-700 border-b border-l border-indigo-700">{{__('Email')}}</th>
+            <th class="p-2 font-bold text-left text-white bg-indigo-700 border-b border-l border-indigo-700">{{__('Roles')}}</th>
+            <th class="w-1/12 p-2 font-bold text-left text-white bg-indigo-700 border-b border-l border-indigo-700">{{__('Actions')}}</th>
             </tr>
         </thead>
         <tbody>
@@ -33,21 +33,21 @@
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-5/12 px-3 mb-6 md:mb-0">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="username">
-                    Name
+                    {{__('Name')}}
                 </label>
-                <input wire:model='username' type="text" id="username" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" placeholder="User name">
+                <input wire:model='username' type="text" id="username" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" placeholder="{{__('User name')}}">
                 @error('username') <p class="text-red-500 text-xs italic">{{$message}}</p> @enderror
             </div>
             <div class="w-full md:w-5/12 px-3">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
-                    Email
+                    {{__('Email')}}
                 </label>
-                <input wire:model='email' type="text" id="email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="User email">
+                <input wire:model='email' type="text" id="email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="{{__('User email')}}">
                 @error('email') <p class="text-red-500 text-xs italic">{{$message}}</p> @enderror
             </div>
             <div class="w-full md:w-2/12 px-3">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">&nbsp;</label>
-                <button type="submit" class="appearance-none block w-full bg-indigo-700 text-white rounded py-3 px-4">Add</button>
+                <button type="submit" class="appearance-none block w-full bg-indigo-700 text-white rounded py-3 px-4">{{__('Add')}}</button>
             </div>
         </div>
     </form>
@@ -55,8 +55,8 @@
     @if ($showDeleteConfirmation)
         <i class="bi bi-arrow-left-circle-fill hover:text-red-900" wire:click="showUserList()"></i>
         <div class="relative px-4 py-3 text-red-700 bg-red-100 border border-red-400 rounded" role="alert">
-            <strong class="font-bold">Warning!</strong><br>
-            <span class="block sm:inline">Do you really want to delete the user {{ $selectedUser?->name }}?</span>
+            <strong class="font-bold">{{__('Warning')}}!</strong><br>
+            <span class="block sm:inline">{{__('Do you really want to delete the user')}} {{ $selectedUser?->name }}?</span>
         </div>
         <div class="grid grid-cols-2 gap-4 mx-auto">
             <div class="text-center">
@@ -84,16 +84,16 @@
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-5/12 px-3 mb-6 md:mb-0">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="editusername">
-                    Name
+                    {{__('Name')}}
                 </label>
-                <input wire:model='editusername' type="text" id="editusername" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" placeholder="User name">
+                <input wire:model='editusername' type="text" id="editusername" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" placeholder="{{__('User name')}}">
                 @error('editusername') <p class="text-red-500 text-xs italic">{{$message}}</p> @enderror
             </div>
             <div class="w-full md:w-5/12 px-3">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="editemail">
-                    Email
+                    {{__('Email')}}
                 </label>
-                <input wire:model='editemail' type="text" id="editemail" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="User email">
+                <input wire:model='editemail' type="text" id="editemail" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="{{__('User email')}}">
                 @error('editemail') <p class="text-red-500 text-xs italic">{{$message}}</p> @enderror
             </div>
         </div>
@@ -101,7 +101,7 @@
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full px-3">
               <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="editpassword">
-                Password
+                {{__('Password')}}
               </label>
               <input wire:model="editpassword" name="editpassword" id="editpassword" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="password" placeholder="******************">
               @error('editpassword') <p class="text-red-500 text-xs italic">{{$message}}</p> @enderror
@@ -110,7 +110,7 @@
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full px-3">
               <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="editpassword_confirmation">
-                Confirm password
+                {{__('Confirm password')}}
               </label>
               <input wire:model="editpassword_confirmation" name="editpassword_confirmation" id="editpassword_confirmation" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="password" placeholder="******************">
             </div>
@@ -119,7 +119,7 @@
         <!----->
 
         <div class="mb-6">
-            <label for="allroles" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Roles</label>
+            <label for="allroles" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">{{__('Roles')}}</label>
                 <select wire:model="selectedRoles" id="allroles" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3" multiple>
                     @foreach ($roles as $role)
                         <option value="{{ $role->name }}">{{$role->name}}</option>
