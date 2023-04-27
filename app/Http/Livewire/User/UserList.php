@@ -166,7 +166,6 @@ class UserList extends Component
         // Только СуперАдмин может установить роль Super User
         if(!$currentUser->hasRole('Super User')) {
             foreach($this->selectedRoles as $role) {
-                error_log($role);
                 if($role == 'Super User') {
                     $this->addError('bigwarning', 'Only Super User can add role Super User!');
                     return;

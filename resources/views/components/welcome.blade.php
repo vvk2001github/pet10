@@ -1,7 +1,7 @@
 <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
     @can('configure.*')
     <div class="grid justify-items-center">
-        <p class="text-base font-bold text-slate-600 hover:text-blue-600">You are a super admin.</p>
+        <p class="text-base font-bold text-slate-600 hover:text-blue-600">{{ __('You are a super user.')}}</p>
     </div>
     @endcan
     @can('configure.chat')
@@ -26,6 +26,7 @@
     @endcan
 </div>
 
+@cannot('configure.*')
 
 <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
     <x-application-logo class="block h-12 w-auto" />
@@ -123,3 +124,4 @@
         </p>
     </div>
 </div>
+@endcannot

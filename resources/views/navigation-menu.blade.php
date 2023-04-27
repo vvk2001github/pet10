@@ -26,13 +26,13 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('tetris.index') }}" :active="request()->routeIs('tetris.index')">
-                        Tetris
+                        {{__('Tetris')}}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('test') }}" :active="request()->routeIs('test')">
-                        Test
+                        {{__('Test')}}
                     </x-nav-link>
                 </div>
 
