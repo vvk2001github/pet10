@@ -3,7 +3,7 @@
     <div class="chatlist_header">
 
         <div class="title">
-            Chat
+            {{__('Chat')}}
         </div>
 
         <div class="img_container">

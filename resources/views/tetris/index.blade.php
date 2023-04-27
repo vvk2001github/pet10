@@ -1,7 +1,7 @@
 <x-tetris-component>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Tetris
+            {{__('Tetris')}}
         </h2>
     </x-slot>
 

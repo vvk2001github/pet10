@@ -170,13 +170,13 @@
 
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('tetris.index') }}" :active="request()->routeIs('tetris.index')">
-                Tetris
+                {{__('Tetris')}}
             </x-responsive-nav-link>
         </div>
 
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('test') }}" :active="request()->routeIs('test')">
-                Test
+                {{__('Test')}}
             </x-responsive-nav-link>
         </div>
 
