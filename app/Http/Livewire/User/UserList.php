@@ -162,7 +162,7 @@ class UserList extends Component
         if(!$currentUser->can('configure.user')) return;
 
         $this->validate();
-
+        // error_log('11111');
         // Только СуперАдмин может установить роль Super User
         if(!$currentUser->hasRole('Super User')) {
             foreach($this->selectedRoles as $role) {
@@ -185,8 +185,8 @@ class UserList extends Component
         };
         if($this->selectedUser->id == 1) $this->selectedUser->assignRole('Super User');
 
-        $this->reset('username');
-        $this->reset('email');
+        $this->reset('editusername');
+        $this->reset('editemail');
         $this->reset('editpassword');
         $this->reset('editpassword_confirmation');
         $this->emitSelf('refreshUsers');
