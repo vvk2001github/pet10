@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TetrisController;
+use App\Http\Livewire\Chat\ConfChat;
 use App\Http\Livewire\Chat\CreateChat;
 use App\Http\Livewire\Chat\Main as MainChatComponent;
 use App\Http\Livewire\User\Main as MainUserComponent;
@@ -41,4 +42,5 @@ Route::middleware([
     Route::get('/chat{key?}', MainChatComponent::class)->name('chat.chat');
 
     Route::get('/confuser', MainUserComponent::class)->name('confuser')->middleware(['can:configure.user']);
+    Route::get('/confchat', ConfChat::class)->name('confchat')->middleware(['can:configure.chat']);
 });

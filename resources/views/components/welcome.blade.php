@@ -15,7 +15,7 @@
                     </path>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
-                <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">{{ __('Configure Chat') }}</a>
+                <a href="{{ route('confchat') }}" class="text-blue-600 dark:text-blue-500 hover:underline">{{ __('Configure Chat') }}</a>
 
             </div>
         @endcan
