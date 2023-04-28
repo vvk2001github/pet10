@@ -10,7 +10,11 @@ class ConfChat extends Component
 {
     public ?\Illuminate\Database\Eloquent\Collection $conversations;
 
+    public int $currentPage = 1;
+
     public bool $deleteConfirmationVisible = false;
+
+    public int $lastPage = 1;
 
     public ?\Illuminate\Database\Eloquent\Collection $messages;
 
@@ -34,6 +38,24 @@ class ConfChat extends Component
         $this->refreshConversations();
     }
 
+    public function paginationGoToFirstPage(): void
+    {
+        $this->currentPage = 1;
+        $this->refreshMessages();
+    }
+
+    public function paginationGoToLastPage(): void
+    {
+        $this->currentPage = $this->lastPage;
+        $this->refreshMessages();
+    }
+
+    public function paginationGoToPage(int $page): void
+    {
+        $this->currentPage = $page;
+        $this->refreshMessages();
+    }
+
     public function refreshConversations(): void
     {
         $this->conversations = Conversation::orderBy('name')->get();
@@ -47,9 +69,17 @@ class ConfChat extends Component
 
         $this->messages = $this->selectedConversation->messages()
             ->orderBy('created_at', 'DESC')
-            ->skip($this->paginationSkip)
+            ->skip($this->paginationStep * ($this->currentPage - 1))
             ->take($this->paginationStep)
             ->get();
+
+        $this->lastPage = intdiv($this->selectedConversation->messages()->count(), $this->paginationStep);
+
+        if ($this->selectedConversation->messages()->count() % $this->paginationStep != 0) {
+            $this->lastPage += 1;
+        }
+
+        error_log($this->lastPage);
     }
 
     public function render()
@@ -60,6 +90,7 @@ class ConfChat extends Component
     public function selectConversation(Conversation $conv): void
     {
         $this->selectedConversation = $conv;
+        $this->currentPage = 1;
         $this->refreshMessages();
     }
 
@@ -72,5 +103,7 @@ class ConfChat extends Component
         $this->selectedMessage = $message;
 
         $this->deleteConfirmationVisible = true;
+
+        error_log($this->selectedMessage);
     }
 }

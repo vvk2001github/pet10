@@ -32,8 +32,8 @@
                                             <td class="p-2 text-left border-b border-l">{{ $conversation->messages->count() }}</td>
 
                                             <td class="p-2 text-left border-b border-l">
-                                                <i class="bi bi-gear-fill hover:text-red-900" wire:key='{{$conversation->id}}'></i>
-                                                <i class="bi bi-trash-fill hover:text-red-900" wire:key='{{$conversation->id}}'></i>
+                                                <i class="bi bi-gear-fill hover:text-red-900" wire:key="conversationEdit-{{$conversation->id}}"></i>
+                                                <i class="bi bi-trash-fill hover:text-red-900" wire:key="conversationDelete-{{$conversation->id}}"></i>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -44,7 +44,7 @@
 
                         @if($selectedConversation)
                         <div class="mx-auto mt-8 grid grid-cols-12 gap-0">
-                            <div class="col-span-12 caption-top">
+                            <div class="col-span-12 caption-top font-bold">
                                 {{ $selectedConversation->name }}
                             </div>
                             <div class="col-span-7 p-2 font-bold text-left text-white bg-indigo-700 border-b border-l border-indigo-700">
@@ -72,14 +72,55 @@
                                     {{ $message->created_at }}
                                 </div>
                                 <div class="col-span-1 p-2 text-left border-b border-l">
-                                    <i class="bi bi-gear-fill hover:text-red-900" wire:key='{{$message->id}}'></i>
-                                    <i wire:click="showDeleteMessageConfirmation({{$message}})" class="bi bi-trash-fill hover:text-red-900" wire:key='{{$message->id}}'></i>
+                                    <i class="bi bi-gear-fill hover:text-red-900" wire:key="messageEdit-{{$message->id}}"></i>
+                                    <i wire:click="showDeleteMessageConfirmation({{$message}})" class="bi bi-trash-fill hover:text-red-900" wire:key='messageDelete-{{$message->id}}'></i>
                                 </div>
                                 @endforeach
                             @endif
                         </div>
-                        @endif
+                        <!---Pagination Links--->
+                        <div class="btn-group mt-8">
+                            <button wire:click="paginationGoToFirstPage" class="btn btn-outline-secondary">
+                                <i class="bi bi-chevron-bar-left"></i>
+                            </button>
 
+                            @for ($i = $currentPage - 30, $count = 0; $count < 3; $i+=10, $count++)
+                                @if($i > 0)
+                                <button wire:click="paginationGoToPage({{$i}})" wire:key="paginationPage-{{ $i }}" class="btn btn-outline-secondary">
+                                    {{ $i }}
+                                </button>
+                                @endif
+                            @endfor
+
+                            @for ($i = $currentPage - 2, $count = 0; $count < 2; $i++, $count++)
+                                @if($i > 0)
+                                <button wire:click="paginationGoToPage({{$i}})" wire:key="paginationPage-{{ $i }}" class="btn btn-outline-secondary">
+                                    {{ $i }}
+                                </button>
+                                @endif
+                            @endfor
+                            <button class="btn btn-outline-secondary font-bold text-black" wire:key="paginationPage-{{ $currentPage }}">
+                                {{ $currentPage }}
+                            </button>
+                            @for ($i = $currentPage + 1, $count = 0; $i <= $lastPage && $count < 2; $i++, $count++)
+                                <button wire:click="paginationGoToPage({{$i}})" wire:key="paginationPage-{{ $i }}" class="btn btn-outline-secondary">
+                                    {{ $i }}
+                                </button>
+                            @endfor
+
+                            @for ($i = $currentPage + 10, $count = 0; $i <= $lastPage && $count < 3; $i+=10, $count++)
+                                <button wire:click="paginationGoToPage({{$i}})" wire:key="paginationPage-{{ $i }}" class="btn btn-outline-secondary">
+                                    {{ $i }}
+                                </button>
+                            @endfor
+
+                            <button wire:click="paginationGoToLastPage" class="btn btn-outline-secondary">
+                                <i class="bi bi-chevron-bar-right"></i>
+                            </button>
+                        </div>
+                        <!---End Pagination Links--->
+                        @endif
+                        <!--if selectedConversation-->
                     </div>
                 </div>
             </div>
@@ -98,7 +139,12 @@
 		<h3 class="text-lg leading-6 font-medium text-gray-900">{{__('Warning')}}!</h3>
 		<div class="mt-2 px-7 py-3">
 			<p class="text-sm text-red-400 font-bold">
-				{{__('Do you really want to delete the message form :sender with date :date?', ['sender' => $message->sender->name, 'date' => $message->created_at])}}
+				{{__('Do you really want to delete the message form :sender with date :date?', ['sender' => $selectedMessage->sender->name, 'date' => $selectedMessage->created_at])}}
+			</p>
+		</div>
+        <div class="mt-2 px-7 py-3">
+			<p class="text-sm text-black-500 font-bold">
+				{{ Str::limit($selectedMessage->body, 100, '...')}}
 			</p>
 		</div>
 		<div class="items-center px-4 py-3">
