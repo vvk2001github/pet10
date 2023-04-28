@@ -76,8 +76,6 @@ class ConfChat extends Component
         if ($this->selectedConversation->messages()->count() % $this->paginationStep != 0) {
             $this->lastPage += 1;
         }
-
-        error_log($this->lastPage);
     }
 
     public function render()
@@ -101,7 +99,12 @@ class ConfChat extends Component
         $this->selectedMessage = $message;
 
         $this->deleteConfirmationVisible = true;
+    }
 
-        error_log($this->selectedMessage);
+    public function updatedPaginationStep()
+    {
+        $this->refreshMessages();
+        $this->currentPage = 1;
+        error_log($this->paginationStep);
     }
 }

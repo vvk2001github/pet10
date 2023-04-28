@@ -44,9 +44,24 @@
 
                         @if($selectedConversation)
                         <div class="mx-auto mt-8 grid grid-cols-12 gap-0">
+
                             <div class="col-span-12 caption-top font-bold">
                                 {{ $selectedConversation->name }}
                             </div>
+
+                            <div class="mx-auto col-span-1">
+                                <select wire:model="paginationStep" class="rounded">
+                                    <option vlaue="10">10</option>
+                                    <option vlaue="20">20</option>
+                                    <option vlaue="30">30</option>
+                                    <option vlaue="50">50</option>
+                                    <option vlaue="100">100</option>
+                                </select>
+                            </div>
+
+                            <div class="col-span-11"></div>
+
+
                             <div class="col-span-7 p-2 font-bold text-left text-white bg-indigo-700 border-b border-l border-indigo-700">
                                 {{ __('Message') }}
                             </div>
@@ -62,6 +77,7 @@
 
                             @if ($messages)
                                 @foreach ($messages as $message)
+
                                 <div class="col-span-7 p-2 text-left border-b border-l">
                                     {{ $message->body }}
                                 </div>
