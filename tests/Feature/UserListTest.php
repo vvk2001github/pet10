@@ -6,7 +6,6 @@ use App\Http\Livewire\User\UserList;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Testing\Fakes\Fake;
 use Livewire\Livewire;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -15,7 +14,6 @@ use Tests\TestCase;
 class UserListTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
-
 
     // Проверяем правильность отображения ролей в списке пользователей
     public function test_userlist_display_roles(): void
@@ -97,7 +95,7 @@ class UserListTest extends TestCase
 
         Livewire::test(UserList::class)
             ->call('selectDeleteUser', $user_for_delete)
-            ->assertSeeHtml("Вы действительно хотете удалить пользователя ".$user_for_delete->name."?");
+            ->assertSeeHtml('Вы действительно хотете удалить пользователя '.$user_for_delete->name.'?');
     }
 
     public function test_select_edit_user()

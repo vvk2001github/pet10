@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class MessageFactory extends Factory
 {
-
     protected $model = Message::class;
+
     /**
      * Define the model's default state.
      *

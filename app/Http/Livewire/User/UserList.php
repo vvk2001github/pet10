@@ -3,29 +3,40 @@
 namespace App\Http\Livewire\User;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 
 class UserList extends Component
 {
-
     public $username;
+
     public $editemail;
+
     public $editusername;
+
     public $editpassword;
+
     public $editpassword_confirmation;
+
     public $email;
+
     public $roles;
+
     public $users;
+
     public ?User $selectedUser = null;
+
     public $selectedRoles = [];
+
     public bool $showList = true;
+
     public bool $showDeleteConfirmation = false;
+
     public bool $showEdit = false;
 
     protected $listeners = ['refreshUsers', 'showUserList'];
+
     protected $messages = [
         'editemail.required' => 'The Email Address cannot be empty.',
         'editemail.email' => 'The Email Address format is not valid.',
@@ -33,14 +44,22 @@ class UserList extends Component
         'editusername.min' => 'The Name must be at least 4 characters.',
     ];
 
-    public function deleteUser():void
+    public function deleteUser(): void
     {
         /** @var App\User $currentUser */
         $currentUser = auth()->user();
-        if(!$currentUser->can('configure.user')) return;
+        if (! $currentUser->can('configure.user')) {
+            return;
+        }
 
-        if(is_null($this->selectedUser)) return;
-        if($this->selectedUser->id == 1) return;
+        if (is_null($this->selectedUser)) {
+            return;
+        }
+
+        if ($this->selectedUser->id == 1) {
+            return;
+        }
+
         $this->selectedUser->delete();
 
         $this->emitSelf('showUserList');
@@ -53,7 +72,7 @@ class UserList extends Component
         $this->refreshUsers();
     }
 
-    public function refreshUsers():void
+    public function refreshUsers(): void
     {
         // error_log('refreshUsers');
         $this->users = User::orderBy('name')->get();
@@ -72,31 +91,35 @@ class UserList extends Component
 
     protected function rules()
     {
-        if($this->showList)
+        if ($this->showList) {
             return [
                 'username' => 'required|min:4',
                 'email' => 'required|email',
             ];
+        }
 
-        if($this->showEdit)
+        if ($this->showEdit) {
             return [
                 'editusername' => 'required|min:4',
                 'editemail' => 'required|email',
-                'editpassword'=> 'confirmed',
-                'editpassword_confirmation'=> '',
+                'editpassword' => 'confirmed',
+                'editpassword_confirmation' => '',
             ];
+        }
     }
 
-    public function selectDeleteUser(User $user):void
+    public function selectDeleteUser(User $user): void
     {
         /** @var App\User $currentUser */
         $currentUser = auth()->user();
-        if(!$currentUser->can('configure.user')) return;
+        if (! $currentUser->can('configure.user')) {
+            return;
+        }
 
         $this->selectedUser = $user;
 
         // Нельзя удалить такого пользователя
-        if($this->selectedUser->id == 1) {
+        if ($this->selectedUser->id == 1) {
             // $this->addError('bigwarning', 'You cannot delete this user!');
             return;
         }
@@ -106,13 +129,13 @@ class UserList extends Component
         $this->showEdit = false;
     }
 
-    public function selectEditUser(User $user):void
+    public function selectEditUser(User $user): void
     {
         /** @var App\User $currentUser */
         $currentUser = auth()->user();
-        if(!$currentUser->can('configure.user')) return;
-
-
+        if (! $currentUser->can('configure.user')) {
+            return;
+        }
 
         $this->selectedUser = $user;
         $this->selectedRoles = $this->selectedUser->getRoleNames();
@@ -123,7 +146,7 @@ class UserList extends Component
         $this->showEdit = true;
     }
 
-    public function showUserList():void
+    public function showUserList(): void
     {
         $this->selectedUser = null;
         $this->showList = true;
@@ -141,7 +164,9 @@ class UserList extends Component
     {
         /** @var App\User $currentUser */
         $currentUser = auth()->user();
-        if(!$currentUser->can('configure.user')) return;
+        if (! $currentUser->can('configure.user')) {
+            return;
+        }
 
         $this->validate();
 
@@ -159,15 +184,17 @@ class UserList extends Component
     {
         /** @var App\User $currentUser */
         $currentUser = auth()->user();
-        if(!$currentUser->can('configure.user')) return;
+        if (! $currentUser->can('configure.user')) {
+            return;
+        }
 
         $this->validate();
-        // error_log('11111');
         // Только СуперАдмин может установить роль Super User
-        if(!$currentUser->hasRole('Super User')) {
-            foreach($this->selectedRoles as $role) {
-                if($role == 'Super User') {
+        if (! $currentUser->hasRole('Super User')) {
+            foreach ($this->selectedRoles as $role) {
+                if ($role == 'Super User') {
                     $this->addError('bigwarning', 'Only Super User can add role Super User!');
+
                     return;
                 }
             }
@@ -175,15 +202,19 @@ class UserList extends Component
 
         $this->selectedUser->name = $this->editusername;
         $this->selectedUser->email = $this->editemail;
-        if($this->editpassword && mb_strlen($this->editpassword) > 0 && $this->editpassword_confirmation == $this->editpassword) {
+        if ($this->editpassword && mb_strlen($this->editpassword) > 0 && $this->editpassword_confirmation == $this->editpassword) {
             $this->selectedUser->password = Hash::make($this->editpassword);
         }
         $this->selectedUser->save();
         $this->selectedUser->syncRoles([]);
-        foreach($this->selectedRoles as $role) {
+
+        foreach ($this->selectedRoles as $role) {
             $this->selectedUser->assignRole($role);
-        };
-        if($this->selectedUser->id == 1) $this->selectedUser->assignRole('Super User');
+        }
+
+        if ($this->selectedUser->id == 1) {
+            $this->selectedUser->assignRole('Super User');
+        }
 
         $this->reset('editusername');
         $this->reset('editemail');

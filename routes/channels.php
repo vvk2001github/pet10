@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 

@@ -5,14 +5,14 @@ namespace App\Http\Livewire\Chat;
 use App\Events\MessageSent;
 use App\Models\Conversation;
 use App\Models\Message;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class SendMessage extends Component
 {
-
     public $body;
+
     public Message $createdMessage;
+
     public ?Conversation $selected_conversation = null;
 
     protected $listeners = [
@@ -39,7 +39,9 @@ class SendMessage extends Component
 
     public function sendMessage()
     {
-        if ($this->body == null) return null;
+        if ($this->body == null) {
+            return null;
+        }
 
         $this->createdMessage = Message::create([
             'sender_id' => auth()->id(),

@@ -12,24 +12,24 @@ class Conversation extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
+    protected $fillable = [
         'user_id',
         'name',
         'descr',
         'last_time_message',
     ];
 
-    public function user():BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function messages():HasMany
+    public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
     }
 
-    public function last_readed_messages():BelongsToMany
+    public function last_readed_messages(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
             ->withPivot('last_readed_message')

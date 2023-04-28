@@ -17,6 +17,7 @@ class SetLocale
     {
         $pet10locale = $request->session()->get('pet10locale', 'ru');
         app()->setLocale($pet10locale);
+
         return $next($request);
     }
 }

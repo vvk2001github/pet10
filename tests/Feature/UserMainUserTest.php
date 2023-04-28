@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\User\UserAdd;
 use App\Http\Livewire\User\UserList;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

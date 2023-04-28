@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\Lang;
 
-use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 
 class ChangeLocale extends Component
 {
     public $mylocale;
+
     public $currentUrl;
 
     public function mount()
@@ -20,6 +20,7 @@ class ChangeLocale extends Component
     {
         session(['pet10locale' => $this->mylocale]);
         app()->setLocale($this->mylocale);
+
         return redirect()->to($this->currentUrl);
     }
 

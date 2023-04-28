@@ -4,40 +4,34 @@ namespace App\Http\Livewire\Chat;
 
 use App\Models\Conversation;
 use App\Models\Message;
-use App\Events\MessageSent;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Chatbox extends Component
 {
-
     public $height;
-    public $selected_conversation = null;
-    public $messages;
-    public $paginateVar = 10;
 
-    // protected $listeners = [
-    //     'loadConversation',
-    //     'loadmore',
-    //     'updateHeight',
-    //     'resetComponent',
-    //     'pushMessage'
-    // ];
+    public $selected_conversation = null;
+
+    public $messages;
+
+    public $paginateVar = 10;
 
     public function broadcastedMessageReceived($event)
     {
         $broadcastedMessage = Message::find($event['message']);
 
-        if($this->selected_conversation && $broadcastedMessage->sender_id != auth()->user()->id && $broadcastedMessage->conversation_id == $this->selected_conversation->id) {
+        if ($this->selected_conversation && $broadcastedMessage->sender_id != auth()->user()->id && $broadcastedMessage->conversation_id == $this->selected_conversation->id) {
             $this->pushMessage($broadcastedMessage);
         }
-        $this->emitTo('chat.chat-list','refresh');
+
+        $this->emitTo('chat.chat-list', 'refresh');
     }
 
     public function getListeners(): array
     {
         return [
-            "echo-private:pet10.chat.MessageSent,MessageSent" => 'broadcastedMessageReceived',
+            'echo-private:pet10.chat.MessageSent,MessageSent' => 'broadcastedMessageReceived',
             // "echo-private:chat.{$selected_conversation},MessageRead" => 'broadcastedMessageRead',
             'loadConversation',
             'loadmore',
@@ -52,11 +46,10 @@ class Chatbox extends Component
     {
         $this->selected_conversation = $conversation;
         $messages_count = Message::where('conversation_id', $this->selected_conversation->id)->count();
-        // error_log('Message count:'.$messages_count);
-        // error_log('selected_conversation:'.$this->selected_conversation->id);
-        $this->messages = Message::where('conversation_id',  $this->selected_conversation->id)
+
+        $this->messages = Message::where('conversation_id', $this->selected_conversation->id)
             ->orderBy('created_at', 'ASC')
-            ->skip($messages_count -  $this->paginateVar)
+            ->skip($messages_count - $this->paginateVar)
             ->take($this->paginateVar)->get();
 
         // error_log($this->messages);
@@ -66,16 +59,16 @@ class Chatbox extends Component
         $this->dispatchBrowserEvent('chatSelected');
     }
 
-    function loadmore()
+    public function loadmore()
     {
 
         // dd('top reached ');
         $this->paginateVar = $this->paginateVar + 10;
         $messages_count = Message::where('conversation_id', $this->selected_conversation->id)->count();
 
-        $this->messages = Message::where('conversation_id',  $this->selected_conversation->id)
+        $this->messages = Message::where('conversation_id', $this->selected_conversation->id)
             ->orderBy('created_at', 'ASC')
-            ->skip($messages_count -  $this->paginateVar)
+            ->skip($messages_count - $this->paginateVar)
             ->take($this->paginateVar)->get();
 
         $height = $this->height;
@@ -86,16 +79,16 @@ class Chatbox extends Component
     {
         $oldest_message = $this->selected_conversation->messages->sortBy('created_at')->last() ?? null;
         $user_id = auth()->user()->id;
-        if($oldest_message) {
+        if ($oldest_message) {
             $id_oldest_message = $oldest_message->id;
             $last_readed_message = $this->selected_conversation->last_readed_messages()->where('user_id', Auth::user()->id)->first()?->pivot->last_readed_message ?? 0;
-            if($last_readed_message == 0) {
+            if ($last_readed_message == 0) {
                 $this->selected_conversation->last_readed_messages()->attach($user_id, ['last_readed_message' => $id_oldest_message]);
             } else {
                 $this->selected_conversation->last_readed_messages()->updateExistingPivot($user_id, ['last_readed_message' => $id_oldest_message]);
             }
         }
-        $this->emitTo('chat.chat-list','refresh');
+        $this->emitTo('chat.chat-list', 'refresh');
     }
 
     public function mount()
@@ -118,10 +111,10 @@ class Chatbox extends Component
 
     public function resetComponent()
     {
-        $this->selected_conversation= null;
+        $this->selected_conversation = null;
     }
 
-    function updateHeight($height)
+    public function updateHeight($height)
     {
         $this->height = $height;
     }

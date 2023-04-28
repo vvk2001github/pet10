@@ -8,9 +8,10 @@ use Livewire\Component;
 class ChatList extends Component
 {
     public \Illuminate\Support\Collection $conversations;
+
     public ?Conversation $selected_conversation = null;
 
-    protected $listeners= ['chatSelected','refresh'=>'$refresh','resetComponent'];
+    protected $listeners = ['chatSelected', 'refresh' => '$refresh', 'resetComponent'];
 
     public function chatSelected(Conversation $conversation)
     {
@@ -26,7 +27,7 @@ class ChatList extends Component
 
     }
 
-    public function render():\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
         return view('livewire.chat.chat-list');
     }
