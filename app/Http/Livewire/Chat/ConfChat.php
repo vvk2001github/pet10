@@ -18,8 +18,6 @@ class ConfChat extends Component
 
     public ?\Illuminate\Database\Eloquent\Collection $messages;
 
-    public int $paginationSkip = 0;
-
     public int $paginationStep = 10;
 
     public ?Conversation $selectedConversation;

@@ -84,7 +84,7 @@
                                 <i class="bi bi-chevron-bar-left"></i>
                             </button>
 
-                            @for ($i = $currentPage - 30, $count = 0; $count < 3; $i+=10, $count++)
+                            @for ($i = $currentPage - ($paginationStep * 3), $count = 0; $count < 3; $i+=$paginationStep, $count++)
                                 @if($i > 0)
                                 <button wire:click="paginationGoToPage({{$i}})" wire:key="paginationPage-{{ $i }}" class="btn btn-outline-secondary">
                                     {{ $i }}
@@ -108,7 +108,7 @@
                                 </button>
                             @endfor
 
-                            @for ($i = $currentPage + 10, $count = 0; $i <= $lastPage && $count < 3; $i+=10, $count++)
+                            @for ($i = $currentPage + $paginationStep, $count = 0; $i <= $lastPage && $count < 3; $i+=$paginationStep, $count++)
                                 <button wire:click="paginationGoToPage({{$i}})" wire:key="paginationPage-{{ $i }}" class="btn btn-outline-secondary">
                                     {{ $i }}
                                 </button>
