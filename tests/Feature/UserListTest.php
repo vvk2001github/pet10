@@ -83,6 +83,7 @@ class UserListTest extends TestCase
 
     public function test_select_delete_user()
     {
+        app()->setLocale('ru');
         $user = User::factory()->create();
         $roleConfigUsers = Role::create([
             'name' => 'User Config',
@@ -96,7 +97,7 @@ class UserListTest extends TestCase
 
         Livewire::test(UserList::class)
             ->call('selectDeleteUser', $user_for_delete)
-            ->assertSeeHtml("Do you really want to delete the user ".$user_for_delete->name."?");
+            ->assertSeeHtml("Вы действительно хотете удалить пользователя ".$user_for_delete->name."?");
     }
 
     public function test_select_edit_user()

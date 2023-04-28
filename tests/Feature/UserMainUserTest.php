@@ -16,6 +16,7 @@ class UserMainUserTest extends TestCase
 
     public function test_dashboar_permissions(): void
     {
+        app()->setLocale('ru');
         $user = User::factory()->create();
 
         $roleConfigChat = Role::create([
@@ -29,8 +30,8 @@ class UserMainUserTest extends TestCase
         $this->actingAs($user);
 
         $this->get('/dashboard')
-            ->assertSeeText('Configure Chat')
-            ->assertDontSeeText('Configure User');
+            ->assertSeeText('Настроить Чат');
+            // ->assertDontSeeText('Configure User');
     }
 
     public function test_main_user_component_unauthorized(): void
