@@ -102,7 +102,7 @@
                                     {{ $message->created_at }}
                                 </div>
                                 <div class="col-span-1 p-2 text-left border-b border-l">
-                                    <i class="bi bi-gear-fill hover:text-red-900" wire:key="messageEdit-{{$message->id}}"></i>
+                                    <i wire:click="showEditMessageWindow({{$message}})" class="bi bi-gear-fill hover:text-red-900" wire:key="messageEdit-{{$message->id}}"></i>
                                     <i wire:click="showDeleteMessageConfirmation({{$message}})" class="bi bi-trash-fill hover:text-red-900" wire:key='messageDelete-{{$message->id}}'></i>
                                 </div>
                                 @endforeach
@@ -210,6 +210,46 @@
                     {{__('Yes')}}
                 </button>
                 <button wire:click="hideDeleteAllMessageConfirmation" class="w-5/12 px-4 py-2 text-base font-medium text-white bg-indigo-500 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-green-300">
+                    {{__('No')}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+@if ($editMessageWindowVisible)
+<!--modal content-->
+<div class="fixed inset-0 w-full h-full overflow-y-auto bg-gray-600 bg-opacity-50">
+    <div class="relative w-1/3 p-5 mx-auto bg-white border rounded-md shadow-lg top-20">
+        <div class="mt-3 text-center">
+            <div class="flex items-center justify-center w-12 h-12 mx-auto bg-green-100 rounded-full">
+                <svg
+                    class="w-6 h-6 text-green-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                    ></path>
+                </svg>
+		    </div>
+
+            <h3 class="text-lg font-medium leading-6 text-gray-900">{{__('Save')}}?</h3>
+            <div class="py-3 mt-2 px-7">
+                <textarea wire:model="newBodyMessage" rows="5" cols="60" name="text" placeholder="Enter text"></textarea>
+            </div>
+
+            <div class="items-center px-4 py-3">
+                <button wire:click="saveSelectedMessage"	class="w-5/12 px-4 py-2 text-base font-medium text-white bg-red-500 rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-green-300">
+                    {{__('Yes')}}
+                </button>
+                <button wire:click="hideEditMessageWindow" class="w-5/12 px-4 py-2 text-base font-medium text-white bg-indigo-500 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-green-300">
                     {{__('No')}}
                 </button>
             </div>

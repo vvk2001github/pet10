@@ -49,6 +49,7 @@ class Chatbox extends Component
 
         $this->messages = Message::where('conversation_id', $this->selected_conversation->id)
             ->orderBy('created_at', 'ASC')
+            ->orderBy('id', 'ASC')
             ->skip($messages_count - $this->paginateVar)
             ->take($this->paginateVar)->get();
 

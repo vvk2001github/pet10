@@ -18,9 +18,13 @@ class ConfChat extends Component
 
     public bool $deleteAllMessageConfirmationVisible = false;
 
+    public bool $editMessageWindowVisible = false;
+
     public int $lastPage = 1;
 
     public ?\Illuminate\Database\Eloquent\Collection $messages;
+
+    public string $newBodyMessage = '';
 
     public int $paginationStep = 10;
 
@@ -35,6 +39,13 @@ class ConfChat extends Component
         $this->selectedMessage = null;
 
         $this->deleteConfirmationVisible = false;
+    }
+
+    public function hideEditMessageWindow(): void
+    {
+        $this->selectedMessage = null;
+
+        $this->editMessageWindowVisible = false;
     }
 
     public function deleteAllSelectedMessages(): void
@@ -119,6 +130,22 @@ class ConfChat extends Component
         return view('livewire.chat.conf-chat');
     }
 
+    public function saveSelectedMessage(): void
+    {
+        $this->editMessageWindowVisible = false;
+
+        /** @var App\User $currentUser */
+        $currentUser = auth()->user();
+        if (! $currentUser->can('configure.chat')) {
+            return;
+        }
+
+        $this->selectedMessage->body = $this->newBodyMessage;
+        $this->selectedMessage->save();
+        $this->selectedMessage = null;
+        $this->refreshMessages();
+    }
+
     public function selectConversation(Conversation $conv): void
     {
         $this->selectedConversation = $conv;
@@ -140,6 +167,20 @@ class ConfChat extends Component
         $this->selectedMessage = $message;
 
         $this->deleteConfirmationVisible = true;
+    }
+
+    public function showEditMessageWindow(Message $message): void
+    {
+        if (! $this->selectedConversation) {
+            return;
+        }
+
+        $this->selectedMessage = $message;
+        $this->newBodyMessage = $this->selectedMessage->body;
+
+        $this->editMessageWindowVisible = true;
+
+        error_log($this->newBodyMessage);
     }
 
     public function updatedAllMessagesChecked(): void
