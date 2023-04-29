@@ -8,11 +8,15 @@ use Livewire\Component;
 
 class ConfChat extends Component
 {
+    public bool $allMessagesChecked = false;
+
     public ?\Illuminate\Database\Eloquent\Collection $conversations;
 
     public int $currentPage = 1;
 
     public bool $deleteConfirmationVisible = false;
+
+    public bool $deleteAllMessageConfirmationVisible = false;
 
     public int $lastPage = 1;
 
@@ -24,11 +28,42 @@ class ConfChat extends Component
 
     public ?Message $selectedMessage;
 
+    public array $selectedMessages = [];
+
     public function hideDeleteMessageConfirmation(): void
     {
         $this->selectedMessage = null;
 
         $this->deleteConfirmationVisible = false;
+    }
+
+    public function deleteAllSelectedMessages(): void
+    {
+        $this->deleteAllMessageConfirmationVisible = false;
+
+        /** @var App\User $currentUser */
+        $currentUser = auth()->user();
+        if (! $currentUser->can('configure.chat')) {
+            return;
+        }
+
+        if (count($this->selectedMessages) == 0) {
+            return;
+        }
+
+        Message::whereIn('id', $this->selectedMessages)->delete();
+
+        $this->selectedMessages = [];
+
+        $this->allMessagesChecked = false;
+        $this->refreshConversations();
+        $this->refreshMessages();
+
+    }
+
+    public function hideDeleteAllMessageConfirmation(): void
+    {
+        $this->deleteAllMessageConfirmationVisible = false;
     }
 
     public function mount(): void
@@ -67,6 +102,7 @@ class ConfChat extends Component
 
         $this->messages = $this->selectedConversation->messages()
             ->orderBy('created_at', 'DESC')
+            ->orderBy('id', 'DESC')
             ->skip($this->paginationStep * ($this->currentPage - 1))
             ->take($this->paginationStep)
             ->get();
@@ -90,6 +126,11 @@ class ConfChat extends Component
         $this->refreshMessages();
     }
 
+    public function showDeleteAllMessageConfirmation(): void
+    {
+        $this->deleteAllMessageConfirmationVisible = true;
+    }
+
     public function showDeleteMessageConfirmation(Message $message): void
     {
         if (! $this->selectedConversation) {
@@ -99,6 +140,20 @@ class ConfChat extends Component
         $this->selectedMessage = $message;
 
         $this->deleteConfirmationVisible = true;
+    }
+
+    public function updatedAllMessagesChecked(): void
+    {
+        $this->selectedMessages = [];
+
+        foreach ($this->messages as $message) {
+            array_push($this->selectedMessages, $message->id);
+        }
+    }
+
+    public function updatedSelectedMessages(): void
+    {
+        error_log(implode(' ', $this->selectedMessages));
     }
 
     public function updatedPaginationStep()

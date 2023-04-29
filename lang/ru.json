@@ -10,6 +10,8 @@
     "Dashboard": "Панель инструментов",
     "Date": "Дата",
     "Delete": "Удалить",
+    "Delete Selected": "Удалить выделенное",
+    "Do you really want to delete all selected messages?": "Вы действительно хотите удалить все выбранные сообщения?",
     "Do you really want to delete the user": "Вы действительно хотете удалить пользователя",
     "Do you really want to delete the message form :sender with date :date?": "Вы действительно хотете удалить сообщение от :sender с датой :date?",
     "Email": "Почта",
