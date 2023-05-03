@@ -116,9 +116,7 @@
 
                             @for ($i = $currentPage - ($paginationStep * 3), $count = 0; $count < 3; $i+=$paginationStep, $count++)
                                 @if($i > 0)
-                                <button wire:click="paginationGoToPage({{$i}})" wire:key="paginationPage-{{ $i }}" class="btn btn-outline-secondary">
-                                    {{ $i }}
-                                </button>
+                                <button wire:click="paginationGoToPage({{$i}})" wire:key="paginationPage-{{ $i }}" class="btn btn-outline-secondary">{{ $i }}</button>
                                 @endif
                             @endfor
 

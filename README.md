@@ -3,6 +3,7 @@ The chat is written using Pusher.
 
 It is possible to block users.
 
+Test for chat.conf-chat component in tests\Feature\ConfChatTest.php
 Test for user.user-list component in tests\Feature\UserListTest.php
 Test for user.main component in tests\Feature\UserMainUserTest.php
 Test for chat.main component in tests\Feature\ChatMainTest.php
