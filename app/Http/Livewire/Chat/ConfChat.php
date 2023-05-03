@@ -179,8 +179,6 @@ class ConfChat extends Component
         $this->newBodyMessage = $this->selectedMessage->body;
 
         $this->editMessageWindowVisible = true;
-
-        error_log($this->newBodyMessage);
     }
 
     public function updatedAllMessagesChecked(): void
@@ -194,13 +192,13 @@ class ConfChat extends Component
 
     public function updatedSelectedMessages(): void
     {
-        error_log(implode(' ', $this->selectedMessages));
+        // error_log(implode(' ', $this->selectedMessages));
     }
 
     public function updatedPaginationStep()
     {
         $this->refreshMessages();
         $this->currentPage = 1;
-        error_log($this->paginationStep);
+        // error_log($this->paginationStep);
     }
 }

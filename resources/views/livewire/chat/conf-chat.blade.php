@@ -59,13 +59,13 @@
                                 </select>
                             </div>
 
-                            <div class="col-span-1 mx-auto">
+                            <div class="col-span-3 mx-auto">
                                 <button wire:click="showDeleteAllMessageConfirmation" class="px-4 py-2 text-base font-medium text-white bg-indigo-500 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-green-300">
                                     {{ __('Delete Selected') }}
                                 </button>
                             </div>
 
-                            <div class="col-span-10"></div>
+                            <div class="col-span-8"></div>
 
                             <!---Table Messages Heaqder--->
                             <div class="flex items-center justify-center col-span-1 p-2 font-bold text-left text-white bg-indigo-700 border border-black rounded-l">
