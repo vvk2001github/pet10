@@ -25,6 +25,7 @@ class CheckBlocked
 
             return redirect()->route('login')->withErrors(['errors' => 'Your Account is suspended, please contact Admin.']);
         }
+
         return $next($request);
     }
 }

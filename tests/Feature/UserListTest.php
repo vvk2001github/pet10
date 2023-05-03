@@ -173,6 +173,7 @@ class UserListTest extends TestCase
             ->set('editpassword', '123456')
             ->set('editpassword_confirmation', '123456')
             ->set('selectedRoles', ['Chat Config'])
+            ->set('blocked', 0)
             ->call('userSave');
 
         $this->assertDatabaseMissing('users', [

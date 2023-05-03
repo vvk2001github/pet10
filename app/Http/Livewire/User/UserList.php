@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Role;
 
 class UserList extends Component
 {
-    public int $blocked;
+    public $blocked;
 
     public $username;
 
