@@ -9,6 +9,8 @@ use Spatie\Permission\Models\Role;
 
 class UserList extends Component
 {
+    public int $blocked;
+
     public $username;
 
     public $editemail;
@@ -141,6 +143,7 @@ class UserList extends Component
         $this->selectedRoles = $this->selectedUser->getRoleNames();
         $this->editusername = $this->selectedUser->name;
         $this->editemail = $this->selectedUser->email;
+        $this->blocked = $this->selectedUser->blocked;
         $this->showList = false;
         $this->showDeleteConfirmation = false;
         $this->showEdit = true;
@@ -205,6 +208,7 @@ class UserList extends Component
         if ($this->editpassword && mb_strlen($this->editpassword) > 0 && $this->editpassword_confirmation == $this->editpassword) {
             $this->selectedUser->password = Hash::make($this->editpassword);
         }
+        $this->selectedUser->blocked = $this->blocked;
         $this->selectedUser->save();
         $this->selectedUser->syncRoles([]);
 

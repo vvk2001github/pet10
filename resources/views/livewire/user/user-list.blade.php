@@ -16,7 +16,12 @@
 
             @foreach ($users as $user)
                 <tr class="odd:bg-gray-100 hover:!bg-stone-200">
-                    <td class="p-2 text-left border-b border-l">{{ $user->name }}</td>
+                    <td class="p-2 text-left border-b border-l">
+                        @if ($user->blocked)
+                            <i class="bi bi-lock-fill"></i>
+                        @endif
+                        {{ $user->name }}
+                    </td>
                     <td class="p-2 text-left border-b border-l">{{ $user->email }}</td>
                     <td class="p-2 text-left border-b border-l">
                         {{ $user->getRoleNames()->implode(', ') }}
@@ -127,6 +132,10 @@
 
 
                 </select>
+        </div>
+        <div class="mb-6">
+            <label for="blocked" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">{{__('Block')}}</label>
+            <input wire:model="blocked" type="checkbox" />
         </div>
 
         <div class="grid grid-cols-3 gap-4 mx-auto">
