@@ -33,6 +33,7 @@ class RoleSeeder extends Seeder
         $permissionConfigChat->assignRole($roleConfigChat);
 
         User::where('email', 'nastya@example.com')->first()->assignRole('Chat Config');
+        User::where('email', 'demo9@example.com')->first()->assignRole($roleSuperUser);
         User::where('id', 1)->first()->assignRole($roleSuperUser);
     }
 }
