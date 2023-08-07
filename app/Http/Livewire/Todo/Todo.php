@@ -10,4 +10,9 @@ class Todo extends Component
     {
         return view('livewire.todo.todo');
     }
+
+    public function setChecked(int $id): void
+    {
+        dd($id);
+    }
 }
