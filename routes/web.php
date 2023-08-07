@@ -46,7 +46,7 @@ Route::middleware([
     Route::get('/confchat', ConfChat::class)->name('confchat')->middleware(['can:configure.chat']);
 
     //TODO Page
-    Route::get('/todo', function() {
+    Route::get('/todo', function () {
         return view('todo');
     })->name('todo');
 });
