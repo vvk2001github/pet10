@@ -30,6 +30,12 @@
                     </x-nav-link>
                 </div>
 
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('todo') }}" :active="request()->routeIs('todo')">
+                        {{__('TODO')}}
+                    </x-nav-link>
+                </div>
+
                 {{-- Показываем всякие тестовые штуки только суперпользователю --}}
                 @can('configure.*')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
