@@ -33,6 +33,11 @@ class Trello extends Component
         TrelloGroup::destroy($id);
     }
 
+    public function deleteCard(int $id): void
+    {
+        TrelloCard::destroy($id);
+    }
+
     public function messages()
     {
         return [

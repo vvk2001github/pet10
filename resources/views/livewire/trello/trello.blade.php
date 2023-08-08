@@ -22,9 +22,9 @@
             </div>
             <div class="mt-2 text-sm">
                 @foreach ($group->trello_cards as $card)
-                <div class="p-2 mt-1 bg-white border-b rounded cursor-pointer border-grey hover:bg-grey-lighter">
+                <div class="flex justify-between p-2 mt-1 bg-white border-b rounded cursor-pointer border-grey hover:bg-grey-lighter">
                     {{ $card->task }}
-                    <i class="bi bi-x hover:text-red-900"></i>
+                    <i wire:click='deleteCard({{ $card->id }})' class="bi bi-x hover:text-red-900"></i>
                 </div>
                 @endforeach
             <p wire:click='addTask({{ $group->id }})' class="mt-3 cursor-pointer text-grey-dark">{{ __('Add task') }}...</p>
