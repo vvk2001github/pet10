@@ -46,9 +46,9 @@
     </div>
 
     @if ($addFormState)
-        <div class="w-full px-4 md:w-1/12">
+        <div class="w-full px-4 ">
             <form wire:submit.prevent='save'>
-                <input wire:model.defer='task' type="text" id="task" class="block w-full px-4 py-3 mb-3 leading-tight border rounded appearance-none">
+                <input wire:model.defer="task" type="text" id="task" class="block w-full px-4 py-3 mb-3 leading-tight border rounded appearance-none">
                 @error('task')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror

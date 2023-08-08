@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Todo extends Component
 {
-    public $task = '';
+    public $task;
 
     public $todos;
 

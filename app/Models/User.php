@@ -69,6 +69,11 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function trello_groups(): HasMany
+    {
+        return $this->hasMany(TrelloGroup::class);
+    }
+
     public function todos(): HasMany
     {
         return $this->hasMany(Todo::class);

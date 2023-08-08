@@ -5,6 +5,7 @@ use App\Http\Livewire\Chat\ConfChat;
 use App\Http\Livewire\Chat\CreateChat;
 use App\Http\Livewire\Chat\Main as MainChatComponent;
 use App\Http\Livewire\Todo\Todo;
+use App\Http\Livewire\Trello\Trello;
 use App\Http\Livewire\User\Main as MainUserComponent;
 use Illuminate\Support\Facades\Route;
 
@@ -49,4 +50,8 @@ Route::middleware([
     Route::get('/todo', function () {
         return view('todo');
     })->name('todo');
+
+    //TODO Page
+    Route::get('/trello', Trello::class)->name('trello');
+
 });

@@ -36,6 +36,12 @@
                     </x-nav-link>
                 </div>
 
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('trello') }}" :active="request()->routeIs('trello')">
+                        {{__('Trello')}}
+                    </x-nav-link>
+                </div>
+
                 {{-- Показываем всякие тестовые штуки только суперпользователю --}}
                 @can('configure.*')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
