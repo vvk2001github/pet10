@@ -4,7 +4,7 @@
     </div>
     <div class="px-4 py-3">
 
-    @if ($todos)
+    @if(count($todos) > 0)
     <table class="w-full border-b table-fixed border-x">
         <thead>
             <tr>
@@ -41,7 +41,8 @@
 
         </tbody>
     </table>
-
+    @else
+    <div class="alert alert-primary" role="alert">{{ __('Add a task') }}</div>
     @endif
     </div>
 

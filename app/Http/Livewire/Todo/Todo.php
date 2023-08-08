@@ -26,6 +26,7 @@ class Todo extends Component
     {
         return [
             'task.min' => __('The task field must be at least 3 characters.'),
+            'task.required' => __('The task field is required.'),
         ];
     }
 

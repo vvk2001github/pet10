@@ -1,5 +1,8 @@
 Pet project with laravel 10 and jetstream, and livewire.
+
 The chat is written using Pusher.
+TODO List
+Trello with livewire/sortable
 
 It is possible to block users.
 
