@@ -48,7 +48,7 @@ class Trello extends Component
     public function saveGroup(): void
     {
         $data = $this->validate([
-            'title'=> 'required|min:3',
+            'title' => 'required|min:3',
         ]);
         $data['user_id'] = auth()->user()->id;
 
@@ -56,10 +56,10 @@ class Trello extends Component
         $this->reset();
     }
 
-    public function saveTask() : void
+    public function saveTask(): void
     {
         $data = $this->validate([
-            'task'=> 'required|min:3',
+            'task' => 'required|min:3',
         ]);
         $data['trello_group_id'] = $this->group_id;
 
@@ -75,6 +75,21 @@ class Trello extends Component
     public function render()
     {
         $this->refreshGroups();
+
         return view('livewire.trello.trello');
+    }
+
+    public function updateOrder($groups)
+    {
+        // dd($groups);
+        foreach ($groups as $group) {
+            TrelloGroup::where(['id' => $group['value']])->update(['sort' => $group['order']]);
+
+            if (isset($group['items'])) {
+                foreach ($group['items'] as $item) {
+                    TrelloCard::where(['id' => $item['value']])->update(['sort' => $item['order'], 'trello_group_id' => $group['value']]);
+                }
+            }
+        }
     }
 }

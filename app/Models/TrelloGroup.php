@@ -24,6 +24,6 @@ class TrelloGroup extends Model
 
     public function trello_cards(): HasMany
     {
-        return $this->hasMany(TrelloCard::class)->orderBy("sort");
+        return $this->hasMany(TrelloCard::class)->orderBy('sort');
     }
 }

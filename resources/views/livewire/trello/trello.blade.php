@@ -12,17 +12,17 @@
 
 
 </div>
-<div class="container flex flex-wrap mx-auto">
+<div class="container flex flex-wrap mx-auto" wire:sortable="updateOrder" wire:sortable-group="updateOrder">
 
     @foreach ($groups as $group)
-        <div class="w-64 p-2 m-1 border-2 border-solid rounded border-indigo-950 bg-grey-light">
+        <div class="w-64 p-2 m-1 border-2 border-solid rounded border-indigo-950 bg-grey-light" wire:key="group-{{ $group->id }}" wire:sortable.item="{{ $group->id }}">
             <div class="flex justify-between py-1">
-                <h3 class="text-sm font-bold">{{ $group->title }}</h3>
+                <h3 class="text-sm font-bold" wire:sortable.handle>{{ $group->title }}</h3>
                 <i wire:click='deleteGroup({{ $group->id }})' class="bi bi-trash-fill hover:text-red-900"></i>
             </div>
-            <div class="mt-2 text-sm">
+            <div wire:sortable-group.item-group="{{ $group->id }}" class="mt-2 text-sm">
                 @foreach ($group->trello_cards as $card)
-                <div class="flex justify-between p-2 mt-1 bg-white border-b rounded cursor-pointer border-grey hover:bg-grey-lighter">
+                <div class="flex justify-between p-2 mt-1 bg-white border-b rounded cursor-pointer border-grey hover:bg-grey-lighter" wire:key="card-{{ $card->id }}" wire:sortable-group.item="{{ $card->id }}" >
                     {{ $card->task }}
                     <i wire:click='deleteCard({{ $card->id }})' class="bi bi-x hover:text-red-900"></i>
                 </div>
