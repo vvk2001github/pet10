@@ -10,6 +10,10 @@ class Trello extends Component
 {
     public $addGroupState = false;
 
+    public $deleteGroupState = false;
+
+    public $deleteGroupEntity;
+
     public $group_id;
 
     public $groups;
@@ -30,7 +34,16 @@ class Trello extends Component
 
     public function deleteGroup(int $id): void
     {
-        TrelloGroup::destroy($id);
+        $this->deleteGroupEntity = TrelloGroup::find($id);
+        // dd($this->deleteGroupEntity->title);
+        $this->deleteGroupState = true;
+    }
+
+    public function destroyGroup()
+    {
+        // TrelloGroup::destroy($this->group_id);
+        $this->deleteGroupEntity->delete();
+        $this->reset();
     }
 
     public function deleteCard(int $id): void
