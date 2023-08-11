@@ -54,7 +54,7 @@ class Trello extends Component
     public function messages()
     {
         return [
-            'title.min' => __('The title field must be at least 3 characters.'),
+            'title.min' => __('The title field must be at least :num characters.', ['num' => '3']),
         ];
     }
 

@@ -42,6 +42,12 @@
                     </x-nav-link>
                 </div>
 
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('feedback') }}" :active="request()->routeIs('feedback')">
+                        {{__('Feedback')}}
+                    </x-nav-link>
+                </div>
+
                 {{-- Показываем всякие тестовые штуки только суперпользователю --}}
                 @can('configure.*')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -187,6 +193,24 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('tetris.index') }}" :active="request()->routeIs('tetris.index')">
                 {{__('Tetris')}}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('todo') }}" :active="request()->routeIs('todo')">
+                {{__('TODO')}}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('trello') }}" :active="request()->routeIs('trello')">
+                {{__('Trello')}}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('feedback') }}" :active="request()->routeIs('feedback')">
+                {{__('Feedback')}}
             </x-responsive-nav-link>
         </div>
 

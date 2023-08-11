@@ -51,7 +51,12 @@ Route::middleware([
         return view('todo');
     })->name('todo');
 
-    //TODO Page
+    //Trello Page
     Route::get('/trello', Trello::class)->name('trello');
+
+    //Feedback Page
+    Route::get('/feedback', function () {
+        return view('feedback');
+    })->name('feedback');
 
 });

@@ -25,7 +25,7 @@ class Todo extends Component
     public function messages()
     {
         return [
-            'task.min' => __('The task field must be at least 3 characters.'),
+            'task.min' => __('The task field must be at least :num characters.', ['num' => '3']),
             'task.required' => __('The task field is required.'),
         ];
     }
