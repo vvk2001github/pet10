@@ -36,6 +36,7 @@ class FeedbackForm extends Component
 
     public function send(): void
     {
+        $this->showSuccessMessage = false;
         $data = $this->validate();
         $data['user_id'] = auth()->user()->id;
         $data['user_name'] = auth()->user()->name;

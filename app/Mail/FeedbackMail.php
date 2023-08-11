@@ -26,7 +26,7 @@ class FeedbackMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Feedback Mail',
+            subject: 'Feedback Mail '.$this->data['title'],
         );
     }
 
