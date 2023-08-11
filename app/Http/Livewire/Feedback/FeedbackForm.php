@@ -12,6 +12,8 @@ class FeedbackForm extends Component
 
     public $message = '';
 
+    public $showSuccessMessage = false;
+
     protected $rules = [
         'title' => 'required|min:5',
         'message' => 'required|min:5',
@@ -42,5 +44,11 @@ class FeedbackForm extends Component
         Mail::to('support@example.com')->send(new FeedbackMail($data));
 
         $this->reset();
+        $this->showSuccessMessage = true;
+    }
+
+    public function closeSuccesMessage()
+    {
+        $this->showSuccessMessage = false;
     }
 }
