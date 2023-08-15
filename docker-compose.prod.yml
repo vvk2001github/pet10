@@ -1,0 +1,43 @@
+version: '3.1'
+name:  pet10prod
+services:
+
+  prod-pet10-pgsql:
+    image: postgres
+    container_name: prod-pet10-pgsql
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: replacepassword
+      POSTGRES_USER: pet10prod
+      POSTGRES_DB: pet10prod
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    volumes:
+      - "/home/kulyaginv/develop/prod-pet10-pgsql-data:/var/lib/postgresql/data/pgdata"
+
+  prod-pet10-nginx:
+    image: nginx:latest
+    container_name: prod-pet10-nginx
+    volumes:
+        - ./_docker/nginx.prod/conf.d:/etc/nginx/conf.d
+        - prod-pet10-vol:/var/www
+    ports:
+      - 8081:80
+    depends_on:
+      - prod-pet10-app
+
+  prod-pet10-app:
+    container_name: prod-pet10-app
+    build:
+      context: .
+      dockerfile: _docker/app/Dockerfile.prod
+    volumes:
+      - "/home/kulyaginv/develop/prod-pet10-storage:/var/www/storage"
+      - prod-pet10-vol:/var/www
+    depends_on:
+        - prod-pet10-pgsql
+
+
+volumes:
+  prod-pet10-vol:
+    external: true
