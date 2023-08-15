@@ -16,3 +16,4 @@ Docker install:
 - php artisan storage:link
 - php artisan migrate 
 or php artisan migrate:fresh --seed
+- npm install

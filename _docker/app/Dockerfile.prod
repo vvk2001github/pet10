@@ -30,7 +30,7 @@ COPY resources          /var/www/resources
 COPY routes             /var/www/routes
 COPY storage            /var/www/storage
 COPY tailwind.config.js /var/www/tailwind.config.js
-COPY vite.config.js     /var/www/vite.config.j
+COPY vite.config.js     /var/www/vite.config.js
 
 COPY _docker/app/.env.prod /var/www/.env
 
