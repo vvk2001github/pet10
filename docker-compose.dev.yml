@@ -1,0 +1,40 @@
+version: '3.1'
+name:  pet10dev
+services:
+
+  dev-pet10-pgsql:
+    image: postgres
+    container_name: dev-pet10-pgsql
+    restart: always
+    ports: 
+      - "55432:5432"
+    environment:
+      POSTGRES_PASSWORD: pet10dev
+      POSTGRES_USER: pet10dev
+      POSTGRES_DB: pet10dev
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - "/home/kulyaginv/develop/dev-pet10-pgsql-data:/var/lib/postgresql/data/pgdata"
+      
+  dev-pet10-nginx:
+    image: nginx:latest
+    container_name: dev-pet10-nginx
+    volumes:
+      - ./:/var/www
+      - ./_docker/nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - 8080:80
+    depends_on:
+      - dev-pet10-app
+    
+  
+  dev-pet10-app:
+    container_name: dev-pet10-app
+    build:
+      context: .
+      dockerfile: _docker/app/Dockerfile
+    volumes:
+      - ./:/var/www
+    depends_on:
+        - dev-pet10-pgsql
+    
