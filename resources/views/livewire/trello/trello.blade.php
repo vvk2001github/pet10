@@ -1,21 +1,21 @@
-<div>
-<div class="container mx-auto">
-    <!--<button wire:click='addGroup' class="block px-2 py-1 text-white bg-indigo-700 rounded appearance-none">{{__('Add')}}</button>-->
-    <x-button wire:click='addGroup' type="button" class="appearance-none">
-        {{ __('Add') }}
-    </x-button>
-    @if($addGroupState)
-        <form wire:submit.prevent='saveGroup'>
-            <!--<input wire:model.defer='title' type="text" id="title" class="block w-full px-4 py-3 mb-3 leading-tight border rounded appearance-none">-->
-            <x-input wire:model.defer='title' class="w-full px-4 py-3 mb-3"></x-input>
-            @error('title')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-        </form>
-    @endif
-
-
+<div class="container">
+<div class="flex justify-center">
+        <x-button wire:click='addGroup' type="button" class="appearance-none mt-2">
+            {{ __('Add') }}
+        </x-button>
 </div>
+
+    @if($addGroupState)
+        <div class="flex justify-center">
+            <form wire:submit.prevent='saveGroup' class="w-full">
+                <!--<input wire:model.defer='title' type="text" id="title" class="block w-full px-4 py-3 mb-3 leading-tight border rounded appearance-none">-->
+                <x-input wire:model.defer='title' class="w-full px-4 py-3 mt-2" placeholder="{{ __('Group title')}}"></x-input>
+                @error('title')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </form>
+        </div>
+    @endif
 
 <div>
     <x-dialog-modal wire:model="deleteGroupState">
@@ -40,6 +40,9 @@
 </div>
 
 <div class="container flex flex-wrap mx-auto" wire:sortable="updateOrder" wire:sortable-group="updateOrder">
+    @if(count($groups) == 0)
+        <div class="alert alert-primary w-full mt-2 text-center" role="alert">{{ __('Add a group') }}</div>
+    @endif
 
     @foreach ($groups as $group)
         <div class="w-64 p-2 m-1 border-2 border-solid rounded border-indigo-950 bg-grey-light" wire:key="group-{{ $group->id }}" wire:sortable.item="{{ $group->id }}">
@@ -58,7 +61,7 @@
 
             @if($group_id == $group->id)
             <form wire:submit.prevent='saveTask'>
-                <input wire:model.defer='task' type="text" id="task" class="block w-full px-4 py-3 mb-3 leading-tight border rounded appearance-none">
+                <input wire:model.defer='task' type="text" placeholder="{{ __('Task') }}" id="task" class="block w-full px-4 py-3 mb-3 leading-tight border rounded appearance-none">
                 @error('task')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror

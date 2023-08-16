@@ -55,6 +55,7 @@ class Trello extends Component
     {
         return [
             'title.min' => __('The title field must be at least :num characters.', ['num' => '3']),
+            'title.required' => __('The :value field is required.', ['value' => __('Title')]),
         ];
     }
 
