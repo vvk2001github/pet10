@@ -18,7 +18,7 @@ class MessageSent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(public User $user, public Message $message)
+    public function __construct(public Message $message)
     {
         //
     }
@@ -26,7 +26,7 @@ class MessageSent implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
-            'user_id' => $this->user->id,
+            // 'user_id' => $this->user->id,
             'message' => $this->message->id,
         ];
     }

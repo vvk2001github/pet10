@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Chat;
 use App\Models\Conversation;
 use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Chatbox extends Component
@@ -21,7 +22,7 @@ class Chatbox extends Component
     {
         $broadcastedMessage = Message::find($event['message']);
 
-        if ($this->selected_conversation && $broadcastedMessage->sender_id != auth()->user()->id && $broadcastedMessage->conversation_id == $this->selected_conversation->id) {
+        if ($this->selected_conversation && $broadcastedMessage->conversation_id == $this->selected_conversation->id) {
             $this->pushMessage($broadcastedMessage);
         }
 

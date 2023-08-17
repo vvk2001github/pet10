@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Chat;
 use App\Events\MessageSent;
 use App\Models\Conversation;
 use App\Models\Message;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class SendMessage extends Component
@@ -24,7 +25,7 @@ class SendMessage extends Component
     public function dispatchMessageSent()
     {
         // error_log('dispatchMessageSent');
-        broadcast(new MessageSent(Auth()->user(), $this->createdMessage, $this->selected_conversation));
+        broadcast(new MessageSent($this->createdMessage))->toOthers();
     }
 
     public function render()
