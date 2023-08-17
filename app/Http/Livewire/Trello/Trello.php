@@ -20,7 +20,7 @@ class Trello extends Component
 
     public $task;
 
-    public $title;
+    public $title = '';
 
     public function addGroup(): void
     {
@@ -35,20 +35,21 @@ class Trello extends Component
     public function deleteGroup(int $id): void
     {
         $this->deleteGroupEntity = TrelloGroup::find($id);
-        // dd($this->deleteGroupEntity->title);
         $this->deleteGroupState = true;
     }
 
     public function destroyGroup()
     {
-        // TrelloGroup::destroy($this->group_id);
         $this->deleteGroupEntity->delete();
+        $this->deleteGroupEntity = null;
         $this->reset();
+        $this->refreshGroups();
     }
 
     public function deleteCard(int $id): void
     {
         TrelloCard::destroy($id);
+        $this->refreshGroups();
     }
 
     public function messages()
@@ -57,6 +58,11 @@ class Trello extends Component
             'title.min' => __('The title field must be at least :num characters.', ['num' => '3']),
             'title.required' => __('The :value field is required.', ['value' => __('Title')]),
         ];
+    }
+
+    public function mount(): void
+    {
+        $this->refreshGroups();
     }
 
     public function saveGroup(): void
@@ -68,6 +74,11 @@ class Trello extends Component
 
         TrelloGroup::create($data);
         $this->reset();
+        $this->refreshGroups();
+
+        // Перезагружаем текущую страницу
+        // Иначе перестает работать livewire/sortable. BUG???
+        redirect(request()->header('Referer'));
     }
 
     public function saveTask(): void
@@ -79,6 +90,7 @@ class Trello extends Component
 
         TrelloCard::create($data);
         $this->reset();
+        $this->refreshGroups();
     }
 
     public function refreshGroups(): void
@@ -88,12 +100,10 @@ class Trello extends Component
 
     public function render()
     {
-        $this->refreshGroups();
-
         return view('livewire.trello.trello');
     }
 
-    public function updateOrder($groups)
+    public function updateGroupOrder($groups)
     {
         // dd($groups);
         foreach ($groups as $group) {
@@ -105,5 +115,12 @@ class Trello extends Component
                 }
             }
         }
+
+        $this->refreshGroups();
+    }
+
+    public function updateTaskOrder($groups)
+    {
+        $this->updateGroupOrder($groups);
     }
 }

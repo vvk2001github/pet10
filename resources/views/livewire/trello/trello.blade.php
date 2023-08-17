@@ -1,9 +1,9 @@
 <div class="container">
-<div class="flex justify-center">
-        <x-button wire:click='addGroup' type="button" class="appearance-none mt-2">
-            {{ __('Add') }}
-        </x-button>
-</div>
+    <div class="flex justify-center">
+            <x-button wire:click='addGroup' type="button" class="mt-2 appearance-none">
+                {{ __('Add') }}
+            </x-button>
+    </div>
 
     @if($addGroupState)
         <div class="flex justify-center">
@@ -17,61 +17,96 @@
         </div>
     @endif
 
-<div>
-    <x-dialog-modal wire:model="deleteGroupState">
-        <x-slot name="title">
-            &laquo;{{ $deleteGroupEntity ? $deleteGroupEntity->title : '' }}&raquo;
-        </x-slot>
+    <div>
+        <x-dialog-modal wire:model="deleteGroupState">
+            <x-slot name="title">
+                &laquo;{{ $deleteGroupEntity ? $deleteGroupEntity->title : '' }}&raquo;
+            </x-slot>
 
-        <x-slot name="content">
-            {{ __('Are you sure you want to delete the group?') }}
-        </x-slot>
+            <x-slot name="content">
+                {{ __('Are you sure you want to delete the group?') }}
+            </x-slot>
 
-        <x-slot name="footer">
-            <x-secondary-button wire:click="$toggle('deleteGroupState')" wire:loading.attr="disabled">
-                {{ __('Cancel') }}
-            </x-secondary-button>
+            <x-slot name="footer">
+                <x-secondary-button wire:click="$toggle('deleteGroupState')" wire:loading.attr="disabled">
+                    {{ __('Cancel') }}
+                </x-secondary-button>
 
-            <x-danger-button class="ml-3" wire:click="destroyGroup" wire:loading.attr="disabled">
-                {{ __('Delete Group') }}
-            </x-danger-button>
-        </x-slot>
-    </x-dialog-modal>
-</div>
+                <x-danger-button class="ml-3" wire:click="destroyGroup" wire:loading.attr="disabled">
+                    {{ __('Delete Group') }}
+                </x-danger-button>
+            </x-slot>
+        </x-dialog-modal>
+    </div>
 
-<div class="container flex flex-wrap mx-auto" wire:sortable="updateOrder" wire:sortable-group="updateOrder">
-    @if(count($groups) == 0)
-        <div class="alert alert-primary w-full mt-2 text-center" role="alert">{{ __('Add a group') }}</div>
-    @endif
+    <div class="flex flex-wrap mx-auto" wire:sortable="updateGroupOrder" wire:sortable-group="updateTaskOrder">
 
-    @foreach ($groups as $group)
-        <div class="w-64 p-2 m-1 border-2 border-solid rounded border-indigo-950 bg-grey-light" wire:key="group-{{ $group->id }}" wire:sortable.item="{{ $group->id }}">
-            <div class="flex justify-between py-1">
-                <h3 class="text-sm font-bold" wire:sortable.handle>{{ $group->title }}</h3>
-                <i wire:click='deleteGroup({{ $group->id }})' class="bi bi-trash-fill hover:text-red-900"></i>
-            </div>
-            <div wire:sortable-group.item-group="{{ $group->id }}" class="mt-2 text-sm">
-                @foreach ($group->trello_cards as $card)
-                <div class="flex justify-between p-2 mt-1 bg-white border-b rounded cursor-pointer border-grey hover:bg-grey-lighter" wire:key="card-{{ $card->id }}" wire:sortable-group.item="{{ $card->id }}" >
-                    {{ $card->task }}
-                    <i wire:click='deleteCard({{ $card->id }})' class="bi bi-x hover:text-red-900"></i>
+        @if(count($groups) == 0)
+            <div class="w-full mt-2 text-center alert alert-primary" role="alert">{{ __('Add a group') }}</div>
+        @endif
+
+        @foreach ($groups as $group)
+            <div wire:key="group-{{ $group->id }}" wire:sortable.item="{{ $group->id }}" class="w-64 p-2 m-1 border-2 border-solid rounded border-indigo-950 bg-grey-light">
+                <div class="flex justify-between py-1">
+                    <h3 wire:sortable.handle class="text-sm font-bold" >{{ $group->title }}</h3>
+                    <i wire:click='deleteGroup({{ $group->id }})' class="bi bi-trash-fill hover:text-red-900"></i>
                 </div>
-                @endforeach
-            <p wire:click='addTask({{ $group->id }})' class="mt-3 cursor-pointer text-grey-dark">{{ __('Add task') }}...</p>
+                <div wire:sortable-group.item-group="{{ $group->id }}" class="mt-2 text-sm">
+                    @foreach ($group->trello_cards as $card)
+                    <div wire:key="card-{{ $card->id }}" wire:sortable-group.item="{{ $card->id }}" class="flex justify-between p-2 mt-1 bg-white border-b rounded cursor-pointer border-grey hover:bg-grey-lighter" >
+                        {{ $card->task }}
+                        <i wire:click='deleteCard({{ $card->id }})' class="bi bi-x hover:text-red-900"></i>
+                    </div>
+                    @endforeach
+                    <p wire:click='addTask({{ $group->id }})' class="mt-3 cursor-pointer text-grey-dark">{{ __('Add task') }}...</p>
 
-            @if($group_id == $group->id)
-            <form wire:submit.prevent='saveTask'>
-                <input wire:model.defer='task' type="text" placeholder="{{ __('Task') }}" id="task" class="block w-full px-4 py-3 mb-3 leading-tight border rounded appearance-none">
-                @error('task')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </form>
-            @endif
+                    @if($group_id == $group->id)
+                    <form wire:submit.prevent='saveTask'>
+                        <input wire:model.defer='task' type="text" placeholder="{{ __('Task') }}" id="task" class="block w-full px-4 py-3 mb-3 leading-tight border rounded appearance-none">
+                        @error('task')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </form>
+                    @endif
 
+                </div>
             </div>
+        @endforeach
+
+
+    </div>
+{{--
+<div wire:sortable="updateGroupOrder" wire:sortable-group="updateTaskOrder" style="display: flex">
+    @foreach ($groups as $group)
+        <div wire:key="group-{{ $group->id }}" wire:sortable.item="{{ $group->id }}">
+            <div style="display: flex">
+                <h4 wire:sortable.handle>{{ $group->title }}</h4>
+
+                <button wire:click="removeGroup({{ $group->id }})">Remove</button>
+            </div>
+
+            <ul wire:sortable-group.item-group="{{ $group->id }}">
+                @foreach ($group->trello_cards as $task)
+                    <li wire:key="task-{{ $task->id }}" wire:sortable-group.item="{{ $task->id }}">
+                        {{ $task->task }}
+                        <button wire:click="removeTask({{ $task->id }})">Remove</button>
+                    </li>
+                @endforeach
+            </ul>
+
+            <form wire:submit.prevent="addTask({{ $group->id }}, $event.target.title.value)">
+                <input type="text" name="title">
+
+                <button>Add Task</button>
+            </form>
         </div>
     @endforeach
 
+    <form wire:submit.prevent="addGroup">
+        <input type="text" wire:model="newGroupLabel">
 
-</div>
+        <button>Add Task Group</button>
+    </form>
+</div> --}}
+
 </div>
