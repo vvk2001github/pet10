@@ -16,7 +16,8 @@ use Tests\TestCase;
 
 class ConfChatTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     // Создаём сообщение в беседе,
     // выбираем беседу и проверям,

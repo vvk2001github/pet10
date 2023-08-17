@@ -13,7 +13,8 @@ use Tests\TestCase;
 
 class UserListTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     // Проверяем правильность отображения ролей в списке пользователей
     public function test_userlist_display_roles(): void

@@ -30,7 +30,6 @@ class UserMainUserTest extends TestCase
 
         $this->get('/dashboard')
             ->assertSeeText('Настроить Чат');
-            // ->assertDontSeeText('Configure User');
     }
 
     public function test_main_user_component_unauthorized(): void

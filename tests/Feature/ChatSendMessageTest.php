@@ -45,9 +45,9 @@ class ChatSendMessageTest extends TestCase
             ->assertEmittedTo('chat.chat-list', 'refresh')
             ->assertEmitted('dispatchMessageSent');
 
-            $this->assertDatabaseHas('messages', [
-                'body' => 'test',
-            ]);
+        $this->assertDatabaseHas('messages', [
+            'body' => 'test',
+        ]);
 
     }
 }
