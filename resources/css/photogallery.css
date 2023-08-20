@@ -1,0 +1,19 @@
+.dz-success-mark {
+    display: none;
+}
+
+.dz-error-mark {
+    display: none;
+}
+
+.dz-details {
+    display: none;
+}
+
+img[data-dz-thumbnail] {
+    border-radius: 10%;
+    border-bottom: indigo;
+    border-width: 5px;
+    margin: 4px;
+}
+

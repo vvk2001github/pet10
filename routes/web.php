@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DropzoneController;
 use App\Http\Controllers\TetrisController;
 use App\Http\Livewire\Chat\ConfChat;
 use App\Http\Livewire\Chat\CreateChat;
@@ -58,5 +59,12 @@ Route::middleware([
     Route::get('/feedback', function () {
         return view('feedback');
     })->name('feedback');
+
+    //Photo Gallery Manage Page
+    Route::get('/photogallerymanage', function () {
+        return view('photogallerymanage');
+    })->name('photogallery.manage');
+
+    Route::post('/dropzone/store',[DropzoneController::class, 'store'])->name('dropzone.store');
 
 });

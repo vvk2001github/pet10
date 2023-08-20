@@ -78,4 +78,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Todo::class);
     }
+
+    public function photos(): HasMany
+    {
+        return $this->hasMany(PhotoGallery::class);
+    }
 }

@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/css/app.css',
 		        'resources/css/tetris-styles.css',
                 'resources/css/sass/chat.scss',
+                'resources/css/photogallery.css',
                 'resources/js/app.js',
                 'resources/js/tetris/app.js',
             ],
