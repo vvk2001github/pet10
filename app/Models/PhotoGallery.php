@@ -13,7 +13,7 @@ class PhotoGallery extends Model
     protected $fillable = [
         'user_id',
         'title',
-        'image'
+        'image',
     ];
 
     public function user(): BelongsTo

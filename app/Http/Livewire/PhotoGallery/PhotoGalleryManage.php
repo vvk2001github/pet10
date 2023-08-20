@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\PhotoGallery;
 
 use App\Models\PhotoGallery;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class PhotoGalleryManage extends Component
@@ -48,6 +47,7 @@ class PhotoGalleryManage extends Component
     public function render()
     {
         $this->refreshPhoto();
+
         return view('livewire.photo-gallery.photo-gallery-manage');
     }
 
@@ -55,5 +55,4 @@ class PhotoGalleryManage extends Component
     {
         $this->photos = auth()->user()->photos->sortBy('id');
     }
-
 }

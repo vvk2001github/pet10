@@ -65,7 +65,7 @@ Route::middleware([
         return view('photogallerymanage');
     })->name('photogallery.manage');
 
-    Route::post('/dropzone/store',[DropzoneController::class, 'store'])->name('dropzone.store');
+    Route::post('/dropzone/store', [DropzoneController::class, 'store'])->name('dropzone.store');
 
     //Photo Gallery Manage Page
     Route::get('/photogalleryindex', function () {
