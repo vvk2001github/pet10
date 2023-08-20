@@ -19,6 +19,12 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('photogallery.index') }}" :active="request()->routeIs('photogallery.index')">
+                        {{ __('Photo gallery') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('chat.chat') }}" :active="request()->routeIs('chat.chat')">
                         {{ __('Chat')}}
                     </x-nav-link>
@@ -143,7 +149,7 @@
                             </x-dropdown-link>
 
                             <x-dropdown-link href="{{ route('photogallery.manage') }}">
-                                {{ __('Photo Gallery') }}
+                                {{ __('Photo gallery') }}
                             </x-dropdown-link>
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -191,6 +197,12 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('chat.chat') }}" :active="request()->routeIs('chat.chat')">
                 {{__('Chat')}}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('photogallery.index') }}" :active="request()->routeIs('photogallery.index')">
+                {{__('Photo gallery')}}
             </x-responsive-nav-link>
         </div>
 
