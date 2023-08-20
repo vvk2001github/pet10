@@ -12,6 +12,10 @@ class PhotoGalleryManage extends Component
 
     public $deletePhotoEntity;
 
+    public $editPhotoState = false;
+
+    public $editPhotoEntity;
+
     public $photos;
 
     protected $listeners = ['refreshPhoto'];
@@ -35,6 +39,12 @@ class PhotoGalleryManage extends Component
         $this->refreshPhoto();
     }
 
+    public function editPhoto(int $id)
+    {
+        $this->editPhotoState = true;
+        $this->editPhotoEntity = PhotoGallery::find($id);
+    }
+
     public function render()
     {
         $this->refreshPhoto();
@@ -43,7 +53,7 @@ class PhotoGalleryManage extends Component
 
     public function refreshPhoto()
     {
-        $this->photos = auth()->user()->photos->sortBy('created_at');
+        $this->photos = auth()->user()->photos->sortBy('id');
     }
 
 }

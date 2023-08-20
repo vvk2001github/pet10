@@ -28,6 +28,29 @@
         </x-dialog-modal>
     </div>
 
+    <div>
+        <x-dialog-modal wire:model="editPhotoState">
+            <x-slot name="title">
+                <input class="w-full" type="text" value="{{ $editPhotoEntity ? $editPhotoEntity->title : ''}}" placeholder="{{ __('Image title') }}"/>
+            </x-slot>
+
+            <x-slot name="content">
+                <img class="m-1" src="{{ $editPhotoEntity ? Storage::url('photogallery/'.$editPhotoEntity->image) : ''}}"/>
+            </x-slot>
+
+            <x-slot name="footer">
+                <x-secondary-button wire:click="$toggle('editPhotoState')" wire:loading.attr="disabled">
+                    {{ __('Cancel') }}
+                </x-secondary-button>
+
+                <x-danger-button class="ml-3" wire:click="updatePhoto" wire:loading.attr="disabled">
+                    {{ __('Save') }}
+                </x-danger-button>
+            </x-slot>
+        </x-dialog-modal>
+    </div>
+
+
     <div id="sendImages" class="flex flex-col items-center invisible w-full">
         <x-button id="sendImagesButton" class="mt-2">
             {{ __('Send') }}
@@ -41,13 +64,10 @@
                 <h3 class="text-sm font-bold" >{{ $photo->title }}</h3>
                 <i wire:click='deletePhoto({{ $photo->id }})' class="bi bi-trash-fill hover:text-red-900"></i>
             </div>
-            <div class="mt-2">
+            <div wire:click='editPhoto({{ $photo->id }})' class="mt-2 cursor-pointer">
                 <img class="m-1" src="{{ Storage::url('photogallery/thumb/'.$photo->image) }}" width="150px" height="150px"/>
             </div>
         </div>
-
-
-
         @endforeach
     </div>
 
