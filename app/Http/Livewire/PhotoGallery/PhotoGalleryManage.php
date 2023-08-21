@@ -4,9 +4,12 @@ namespace App\Http\Livewire\PhotoGallery;
 
 use App\Models\PhotoGallery;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class PhotoGalleryManage extends Component
 {
+    use WithPagination;
+
     public $deletePhotoState = false;
 
     public $deletePhotoEntity;
@@ -15,7 +18,7 @@ class PhotoGalleryManage extends Component
 
     public $editPhotoEntity;
 
-    public $photos;
+    // public $photos;
 
     protected $listeners = ['refreshPhoto'];
 
@@ -52,26 +55,28 @@ class PhotoGalleryManage extends Component
     public function editPhoto(int $id)
     {
         $this->resetErrorBag();
-        $this->editPhotoState = true;
         $this->editPhotoEntity = PhotoGallery::find($id);
+        $this->editPhotoState = true;
     }
 
     public function render()
     {
-        $this->refreshPhoto();
-
-        return view('livewire.photo-gallery.photo-gallery-manage');
+        return view('livewire.photo-gallery.photo-gallery-manage', [
+            'photos' => PhotoGallery::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->paginate(10),
+        ]);
     }
 
     public function refreshPhoto()
     {
-        $this->photos = auth()->user()->photos->sortByDesc('id');
+        $this->reset();
+        // $this->photos = auth()->user()->photos->sortByDesc('id');
     }
 
     public function updatePhoto()
     {
         $this->validate();
         $this->editPhotoEntity->save();
-        $this->reset();
+        $this->editPhotoState = false;
+        $this->editPhotoEntity = null;
     }
 }

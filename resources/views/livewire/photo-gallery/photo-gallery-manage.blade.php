@@ -28,32 +28,34 @@
         </x-dialog-modal>
     </div>
 
-    @if(isset($editPhotoEntity))
-        <div>
-            <x-dialog-modal wire:model="editPhotoState">
-                <x-slot name="title">
-                    <input wire:model.defer='editPhotoEntity.title' class="w-full" type="text" placeholder="{{ __('Image title') }}"/>
-                    <div class="w-full">
-                        <x-validation-errors />
-                    </div>
-                </x-slot>
 
-                <x-slot name="content">
-                    <img class="m-1" src="{{ Storage::url('photogallery/'.$editPhotoEntity->image)}}"/>
-                </x-slot>
+    <div>
+        @if(isset($editPhotoEntity))
+        <x-dialog-modal wire:model="editPhotoState">
+            <x-slot name="title">
+                <input wire:model.defer='editPhotoEntity.title' class="w-full" type="text" placeholder="{{ __('Image title') }}"/>
+                <div class="w-full">
+                    <x-validation-errors />
+                </div>
+            </x-slot>
 
-                <x-slot name="footer">
-                    <x-secondary-button wire:click="$toggle('editPhotoState')" wire:loading.attr="disabled">
-                        {{ __('Cancel') }}
-                    </x-secondary-button>
+            <x-slot name="content">
+                <img class="m-1" src="{{ Storage::url('photogallery/'.$editPhotoEntity->image)}}"/>
+            </x-slot>
 
-                    <x-danger-button class="ml-3" wire:click="updatePhoto" wire:loading.attr="disabled">
-                        {{ __('Save') }}
-                    </x-danger-button>
-                </x-slot>
-            </x-dialog-modal>
-        </div>
-    @endif
+            <x-slot name="footer">
+                <x-secondary-button wire:click="$toggle('editPhotoState')" wire:loading.attr="disabled">
+                    {{ __('Cancel') }}
+                </x-secondary-button>
+
+                <x-danger-button class="ml-3" wire:click="updatePhoto" wire:loading.attr="disabled">
+                    {{ __('Save') }}
+                </x-danger-button>
+            </x-slot>
+        </x-dialog-modal>
+        @endif
+    </div>
+
 
 
     <div id="sendImages" class="flex flex-col items-center invisible w-full">
@@ -75,7 +77,7 @@
         </div>
         @endforeach
     </div>
-
+    {{ $photos->links() }}
     <script>
         let myDropzone = new Dropzone("div#myDropzone",
             {
