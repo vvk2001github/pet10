@@ -17,7 +17,7 @@ class PhotoGalleryIndex extends Component
     public function render()
     {
         return view('livewire.photo-gallery.photo-gallery-index', [
-            'photos' => PhotoGallery::orderBy('id')->paginate(4),
+            'photos' => PhotoGallery::orderBy('id', 'DESC')->paginate(4),
         ]);
     }
 

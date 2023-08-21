@@ -55,13 +55,13 @@
                 </div>
 
                 {{-- Показываем всякие тестовые штуки только суперпользователю --}}
-                @can('configure.*')
+                {{-- @can('configure.*')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('test') }}" :active="request()->routeIs('test')">
                         {{__('Test')}}
                     </x-nav-link>
                 </div>
-                @endcan
+                @endcan --}}
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">

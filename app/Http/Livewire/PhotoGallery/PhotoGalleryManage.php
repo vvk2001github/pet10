@@ -65,7 +65,7 @@ class PhotoGalleryManage extends Component
 
     public function refreshPhoto()
     {
-        $this->photos = auth()->user()->photos->sortBy('id');
+        $this->photos = auth()->user()->photos->sortByDesc('id');
     }
 
     public function updatePhoto()
