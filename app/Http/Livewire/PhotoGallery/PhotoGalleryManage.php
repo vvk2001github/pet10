@@ -19,6 +19,18 @@ class PhotoGalleryManage extends Component
 
     protected $listeners = ['refreshPhoto'];
 
+    protected $rules = [
+        'editPhotoEntity.title' => 'required|string|min:3',
+    ];
+
+    public function messages()
+    {
+        return [
+            'editPhotoEntity.title.min' => __('The title field must be at least :num characters.', ['num' => '3']),
+            'editPhotoEntity.title.required' => __('The :value field is required.', ['value' => 'Заголовок']),
+        ];
+    }
+
     public function deletePhoto(int $id): void
     {
         $this->deletePhotoEntity = PhotoGallery::find($id);
@@ -35,11 +47,11 @@ class PhotoGalleryManage extends Component
         $this->deletePhotoEntity->delete();
         $this->deletePhotoEntity = null;
         $this->reset();
-        $this->refreshPhoto();
     }
 
     public function editPhoto(int $id)
     {
+        $this->resetErrorBag();
         $this->editPhotoState = true;
         $this->editPhotoEntity = PhotoGallery::find($id);
     }
@@ -54,5 +66,12 @@ class PhotoGalleryManage extends Component
     public function refreshPhoto()
     {
         $this->photos = auth()->user()->photos->sortBy('id');
+    }
+
+    public function updatePhoto()
+    {
+        $this->validate();
+        $this->editPhotoEntity->save();
+        $this->reset();
     }
 }

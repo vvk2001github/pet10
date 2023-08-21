@@ -28,27 +28,32 @@
         </x-dialog-modal>
     </div>
 
-    <div>
-        <x-dialog-modal wire:model="editPhotoState">
-            <x-slot name="title">
-                <input class="w-full" type="text" value="{{ $editPhotoEntity ? $editPhotoEntity->title : ''}}" placeholder="{{ __('Image title') }}"/>
-            </x-slot>
+    @if(isset($editPhotoEntity))
+        <div>
+            <x-dialog-modal wire:model="editPhotoState">
+                <x-slot name="title">
+                    <input wire:model.defer='editPhotoEntity.title' class="w-full" type="text" placeholder="{{ __('Image title') }}"/>
+                    <div class="w-full">
+                        <x-validation-errors />
+                    </div>
+                </x-slot>
 
-            <x-slot name="content">
-                <img class="m-1" src="{{ $editPhotoEntity ? Storage::url('photogallery/'.$editPhotoEntity->image) : ''}}"/>
-            </x-slot>
+                <x-slot name="content">
+                    <img class="m-1" src="{{ Storage::url('photogallery/'.$editPhotoEntity->image)}}"/>
+                </x-slot>
 
-            <x-slot name="footer">
-                <x-secondary-button wire:click="$toggle('editPhotoState')" wire:loading.attr="disabled">
-                    {{ __('Cancel') }}
-                </x-secondary-button>
+                <x-slot name="footer">
+                    <x-secondary-button wire:click="$toggle('editPhotoState')" wire:loading.attr="disabled">
+                        {{ __('Cancel') }}
+                    </x-secondary-button>
 
-                <x-danger-button class="ml-3" wire:click="updatePhoto" wire:loading.attr="disabled">
-                    {{ __('Save') }}
-                </x-danger-button>
-            </x-slot>
-        </x-dialog-modal>
-    </div>
+                    <x-danger-button class="ml-3" wire:click="updatePhoto" wire:loading.attr="disabled">
+                        {{ __('Save') }}
+                    </x-danger-button>
+                </x-slot>
+            </x-dialog-modal>
+        </div>
+    @endif
 
 
     <div id="sendImages" class="flex flex-col items-center invisible w-full">
